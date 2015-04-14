@@ -41,7 +41,6 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Label;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.MethodVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
-import edu.columbia.cs.psl.phosphor.org.objectweb.asm.util.Printer;
 
 /**
  * A {@link MethodVisitor} that keeps track of stack map frame changes between
@@ -277,6 +276,7 @@ public class NeverNullArgAnalyzerAdapter extends MethodVisitor {
 
     @Override
     public void visitInsn(final int opcode) {
+
         if (mv != null) {
             mv.visitInsn(opcode);
         }
@@ -354,6 +354,7 @@ public class NeverNullArgAnalyzerAdapter extends MethodVisitor {
               return;
           }
           pop(desc);
+
           if (opcode != Opcodes.INVOKESTATIC) {
               Object t = pop();
               if (opcode == Opcodes.INVOKESPECIAL && name.charAt(0) == '<') {
@@ -362,6 +363,10 @@ public class NeverNullArgAnalyzerAdapter extends MethodVisitor {
                       u = this.owner;
                   } else {
                       u = uninitializedTypes.get(t);
+                  }
+                  if(u == null){
+                	  System.out.println(uninitializedTypes);
+                	  throw new IllegalStateException();
                   }
                   for (int i = 0; i < locals.size(); ++i) {
                       if (locals.get(i) == t) {
@@ -627,6 +632,7 @@ public class NeverNullArgAnalyzerAdapter extends MethodVisitor {
             labels = null;
             return;
         }
+        
         Object t1, t2, t3, t4;
         switch (opcode) {
         case Opcodes.INEG:

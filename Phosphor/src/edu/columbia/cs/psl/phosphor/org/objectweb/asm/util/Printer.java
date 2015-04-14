@@ -105,7 +105,10 @@ public abstract class Printer {
         OPCODES[210] = "AUTOBOX";
         OPCODES[211] = "BOX_JMP";
         OPCODES[212] = "UNBOX_JMP";
-        
+        OPCODES[214] = "COND_START";
+        OPCODES[215] = "COND_END";
+        OPCODES[216] = "CTRL_STORE_FORCE";
+
         /*
          * 	
 	public static final int RAW_INSN = 201;

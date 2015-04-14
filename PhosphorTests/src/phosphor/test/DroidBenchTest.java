@@ -15,22 +15,23 @@ import de.ecspride.Datacontainer;
 import de.ecspride.General;
 import de.ecspride.VarA;
 import de.ecspride.VarB;
+import edu.columbia.cs.psl.phosphor.runtime.MultiTainter;
 import edu.columbia.cs.psl.phosphor.runtime.Tainter;
 
 public class DroidBenchTest {
 
 	public static int getTaint(String description) {
-		return Tainter.getTaint(description.toCharArray()[0]);
+		return MultiTainter.getTaint(description.toCharArray()[0]) == null ? 0 : 1;
 	}
 
 	public static String taintedString(String string) {
-		char[] c = Tainter.taintedCharArray(string.toCharArray(), 5);
+		char[] c = MultiTainter.taintedCharArray(string.toCharArray(), 5);
 		String r = new String(c);
 		return r;
 	}
 
 	public static String taintedString() {
-		char[] c = Tainter.taintedCharArray("abcdefghi".toCharArray(), 5);
+		char[] c = MultiTainter.taintedCharArray("abcdefghi".toCharArray(), 5);
 		String r = new String(c);
 		return r;
 	}
@@ -364,7 +365,7 @@ public class DroidBenchTest {
 	}
 
 	static void testHashMapAccess1() {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("tainted", taintedString());
 		map.put("untainted", "abcd");
 		assert (getTaint(map.get("untainted")) == 0);
@@ -372,7 +373,7 @@ public class DroidBenchTest {
 	}
 
 	static void testListAccess1() {
-		LinkedList<String> list = new LinkedList<>();
+		LinkedList<String> list = new LinkedList<String>();
 		list.add("b");
 		list.add(taintedString());
 		list.add("c");

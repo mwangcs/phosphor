@@ -1,10 +1,10 @@
 package edu.columbia.cs.psl.defuse;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Label;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.MethodVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
+import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.util.Printer;
 import edu.columbia.cs.psl.phosphor.struct.TaintedDouble;
 import edu.columbia.cs.psl.phosphor.struct.TaintedInt;
@@ -25,28 +25,47 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 	public void visitFieldInsn(int opcode, String owner, String name,
 			String desc) {
 		//System.out.println("Visit " + Printer.OPCODES[opcode] +  name + " - " + desc);
-		if(opcode == Opcodes.PUTSTATIC || opcode == Opcodes.PUTFIELD)
+		Type fieldType = Type.getType(desc);
+		switch(fieldType.getSort())
 		{
-			//Variable being stored is at this location on stack
-			super.visitLdcInsn(className);
-			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
-			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
+		case Type.OBJECT:
+		case Type.ARRAY:
+			break;
+		case Type.INT:
+		case Type.BOOLEAN:
+		case Type.BYTE:
+		case Type.CHAR:
+		case Type.DOUBLE:
+		case Type.FLOAT:
+		case Type.LONG:
+		case Type.SHORT:
+			if(opcode == Opcodes.PUTSTATIC || opcode == Opcodes.PUTFIELD)
+			{
+				//Variable being stored is at this location on stack
+				super.visitLdcInsn(className);
+				super.visitLdcInsn(methodName);
+				super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
-			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
-		}
-		else if(opcode == Opcodes.GETSTATIC || opcode == Opcodes.GETFIELD)
-		{
-			//Loads variable stored in "var" onto stack
-			super.visitFieldInsn(opcode, owner, name, desc);
-			super.visitLdcInsn(className);
-			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
-			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
+				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
+			}
+			else if(opcode == Opcodes.GETSTATIC || opcode == Opcodes.GETFIELD)
+			{
+				//Loads variable stored in "var" onto stack
+				super.visitFieldInsn(opcode, owner, name, desc);
+				super.visitLdcInsn(className);
+				super.visitLdcInsn(methodName);
+				super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
-			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
-			return;
+				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
+				return;
+			}
+			break;
+			default:
+				throw new UnsupportedOperationException();
 		}
+
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}
 	int currentLineNumber;

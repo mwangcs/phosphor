@@ -10,15 +10,13 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Type;
-
 import edu.columbia.cs.psl.phosphor.instrumenter.TaintTrackingClassVisitor;
-import edu.columbia.cs.psl.phosphor.org.objectweb.asm.AnnotationVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.ClassReader;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.ClassVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.ClassWriter;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.MethodVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
+import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.commons.JSRInlinerAdapter;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.commons.SerialVersionUIDAdder;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.AnnotationNode;
@@ -26,14 +24,17 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.ClassNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.MethodNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.util.CheckClassAdapter;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.util.TraceClassVisitor;
+import edu.columbia.cs.psl.phosphor.runtime.Taint;
 import edu.columbia.cs.psl.phosphor.runtime.TaintInstrumented;
+import edu.columbia.cs.psl.phosphor.struct.ControlTaintTagStack;
 import edu.columbia.cs.psl.phosphor.struct.Tainted;
-import edu.columbia.cs.psl.phosphor.struct.TaintedByteArray;
+import edu.columbia.cs.psl.phosphor.struct.TaintedByteArrayWithIntTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedByteArrayWithObjTag;
 
 public class PreMain {
     private static Instrumentation instrumentation;
 
-    static boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
 	public static ClassLoader bigLoader = PreMain.class.getClassLoader();
 	public static final class PCLoggingTransformer implements ClassFileTransformer {
@@ -92,8 +93,30 @@ public class PreMain {
 
 		static boolean innerException = false;
 
-		public TaintedByteArray transform$$INVIVO_PC(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, int[] classtaint, byte[] classfileBuffer, TaintedByteArray ret) throws IllegalClassFormatException
+
+		public TaintedByteArrayWithObjTag transform$$PHOSPHORTAGGED(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, Taint[] classtaint,
+				byte[] classfileBuffer, TaintedByteArrayWithObjTag ret) throws IllegalClassFormatException {
+			Configuration.IMPLICIT_TRACKING = false;
+			Configuration.MULTI_TAINTING = true;
+			Configuration.init();
+			ret.val = transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
+			ret.taint = null;
+			return ret;
+		}
+		public TaintedByteArrayWithObjTag transform$$PHOSPHORTAGGED(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, Taint[] classtaint,
+				byte[] classfileBuffer, ControlTaintTagStack ctrl, TaintedByteArrayWithObjTag ret) throws IllegalClassFormatException {
+			Configuration.IMPLICIT_TRACKING = true;
+			Configuration.MULTI_TAINTING = true;
+			Configuration.init();
+			ret.val = transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
+			ret.taint = null;
+			return ret;
+		}
+		public TaintedByteArrayWithIntTag transform$$PHOSPHORTAGGED(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, int[] classtaint, byte[] classfileBuffer, TaintedByteArrayWithIntTag ret) throws IllegalClassFormatException
 		{
+			Configuration.IMPLICIT_TRACKING = false;
+			Configuration.MULTI_TAINTING = false;
+			Configuration.init();
 	        bigLoader = loader;
 	        Instrumenter.loader = bigLoader;
 			if(className.startsWith("sun")) //there are dynamically generated accessors for reflection, we don't want to instrument those.
@@ -133,7 +156,7 @@ public class PreMain {
 						return classfileBuffer;
 				}
 			for(MethodNode mn : cn.methods)
-				if(mn.name.equals("getINVIVO_PC_TAINT"))
+				if(mn.name.equals("getPHOSPHOR_TAG"))
 					return classfileBuffer;
 			if (skipFrames)
 			{
@@ -175,7 +198,9 @@ public class PreMain {
 				{
 //					if(TaintUtils.DEBUG_FRAMES)
 //						System.out.println("NOW IN CHECKCLASSADAPTOR");
-					if (TaintUtils.VERIFY_CLASS_GENERATION && !className.startsWith("org/codehaus/janino/UnitCompiler")) {
+					if (TaintUtils.VERIFY_CLASS_GENERATION && !className.startsWith("org/codehaus/janino/UnitCompiler") &&
+							!className.startsWith("jersey/repackaged/com/google/common/cache/LocalCache") && !className.startsWith("jersey/repackaged/com/google/common/collect/AbstractMapBasedMultimap")
+							&& !className.startsWith("jersey/repackaged/com/google/common/collect/")) {
 						cr = new ClassReader(cw.toByteArray());
 						cr.accept(new CheckClassAdapter(new ClassWriter(0)), 0);
 					}
@@ -206,6 +231,7 @@ public class PreMain {
 //				System.out.println("Succeeded w " + className);
 				return cw.toByteArray();
 			} catch (Throwable ex) {
+				ex.printStackTrace();
 				cv= new TraceClassVisitor(null,null);
 				try{
 					cr.accept(
@@ -247,6 +273,12 @@ public class PreMain {
 		}
 	}
 
+	public static void premain$$PHOSPHORTAGGED(String args, Instrumentation inst, ControlTaintTagStack ctrl) {
+		Configuration.IMPLICIT_TRACKING = true;
+		Configuration.MULTI_TAINTING = true;
+		Configuration.init();
+		premain(args, inst);
+	}
 	public static void premain(String args, Instrumentation inst) {
         instrumentation = inst;
         if(Instrumenter.loader == null)

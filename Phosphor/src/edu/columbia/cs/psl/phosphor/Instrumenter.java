@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -22,7 +21,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -32,12 +33,20 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Type;
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
 
 import edu.columbia.cs.psl.phosphor.instrumenter.TaintTrackingClassVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.ClassReader;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.ClassVisitor;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
+import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
+import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.ClassNode;
 import edu.columbia.cs.psl.phosphor.runtime.Tainter;
 import edu.columbia.cs.psl.phosphor.struct.CallGraph;
 import edu.columbia.cs.psl.phosphor.struct.MethodInformation;
@@ -242,31 +251,31 @@ public class Instrumenter {
 	static HashSet<String> notAnnotations = new HashSet<String>();
 
 	public static boolean isAnnotation(String owner) {
-		if (annotations.contains(owner))
-			return true;
-		if (notAnnotations.contains(owner))
-			return false;
-		try {
-			Class c;
-			try {
-				if (loader == null)
-					c = Class.forName(owner.replace("/", "."));
-				else
-					c = loader.loadClass(owner.replace("/", "."));
-				if (c.isAnnotation()) {
-					annotations.add(owner);
-//					System.out.println("Annotation: " + c);
-					return true;
-				}
-				notAnnotations.add(owner);
-			} catch (Throwable ex) {
-				//TODO fix this
-			}
-			return false;
-		} catch (Exception ex) {
-			//			System.out.println("Unable to load for annotation-checking purposes: " + owner);
-			notAnnotations.add(owner);
-		}
+//		if (annotations.contains(owner))
+//			return true;
+//		if (notAnnotations.contains(owner))
+//			return false;
+//		try {
+//			Class c;
+//			try {
+//				if (loader == null)
+//					c = Class.forName(owner.replace("/", "."));
+//				else
+//					c = loader.loadClass(owner.replace("/", "."));
+//				if (c.isAnnotation()) {
+//					annotations.add(owner);
+////					System.out.println("Annotation: " + c);
+//					return true;
+//				}
+//				notAnnotations.add(owner);
+//			} catch (Throwable ex) {
+//				//TODO fix this
+//			}
+//			return false;
+//		} catch (Exception ex) {
+//			//			System.out.println("Unable to load for annotation-checking purposes: " + owner);
+//			notAnnotations.add(owner);
+//		}
 		return false;
 	}
 
@@ -361,12 +370,25 @@ public class Instrumenter {
 				//																|| owner.startsWith("java/awt/image/BufferedImage")
 				//																|| owner.equals("java/awt/Image")
 				|| (owner.startsWith("edu/columbia/cs/psl/phosphor") && ! owner.equals(Type.getInternalName(Tainter.class)))
-				||owner.startsWith("sun/awt/image/codec/");
+				||owner.startsWith("sun/awt/image/codec/")
+								|| (owner.startsWith("sun/reflect/Reflection")) //was on last
+				|| owner.equals("java/lang/reflect/Proxy") //was on last
+				|| owner.startsWith("sun/reflection/annotation/AnnotationParser") //was on last
+				|| owner.startsWith("sun/reflect/MethodAccessor") //was on last
+				|| owner.startsWith("org/apache/jasper/runtime/JspSourceDependent")
+				|| owner.startsWith("sun/reflect/ConstructorAccessor") //was on last
+				|| owner.startsWith("sun/reflect/SerializationConstructorAccessor")
+
+				|| owner.startsWith("sun/reflect/GeneratedMethodAccessor") || owner.startsWith("sun/reflect/GeneratedConstructorAccessor")
+				|| owner.startsWith("sun/reflect/GeneratedSerializationConstructor") || owner.startsWith("sun/awt/image/codec/")
+				|| owner.startsWith("java/lang/invoke/LambdaForm")
+				;
 	}
 
 	public static HashSet<String> interfaces = new HashSet<String>();
 	public static CallGraph callgraph = new CallGraph();
 
+	public static HashMap<String, ClassNode> classes = new HashMap<String, ClassNode>();
 	public static void analyzeClass(InputStream is) {
 		ClassReader cr;
 		nTotal++;
@@ -378,6 +400,14 @@ public class Instrumenter {
 				@Override
 				public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 					super.visit(version, access, name, signature, superName, interfaces);
+					ClassNode cn = new ClassNode();
+					cn.name = name;
+					cn.methods = new LinkedList();
+					cn.superName = superName;
+					cn.interfaces = new ArrayList<String>();
+					for(String s : interfaces)
+						cn.interfaces.add(s);
+					Instrumenter.classes.put(name, cn);
 					if ((access & Opcodes.ACC_INTERFACE) != 0)
 						Instrumenter.interfaces.add(name);
 				}
@@ -418,21 +448,80 @@ public class Instrumenter {
 		}
 	}
 
+	static Option opt_taintSources = OptionBuilder.withArgName("taintSources").hasArg().withDescription("File with listing of taint sources to auto-taint").create("taintSources");
+	static Option opt_taintSinks =   OptionBuilder.withArgName("taintSinks").hasArg().withDescription("File with listing of taint sinks to use to check for auto-taints").create("taintSinks");
+	static Option opt_dataTrack = new Option("withoutDataTrack", "Disable taint tracking through data flow (on by default)");
+	static Option opt_controlTrack = new Option("controlTrack", "Enable taint tracking through control flow");
+	static Option opt_multiTaint = new Option("multiTaint", "Support for 2^32 tags instead of just 32");
+	static Option help = new Option( "help", "print this message" );
+
+	public static String sourcesFile;
+	public static String sinksFile;
+	
 	public static void main(String[] args) {
-		if(args.length < 2)
-		{
-			 System.err.println("Usage: java {-DTAINT_SINKS=... -DTAINT_SOURCES=...} -jar phosphor.jar [source] [dest] {additional-classpath-entries}");
-			 return;
+		
+		Options options = new Options();
+		options.addOption(help);
+		options.addOption(opt_multiTaint);
+		options.addOption(opt_controlTrack);
+		options.addOption(opt_dataTrack);
+		options.addOption(opt_taintSinks);
+		options.addOption(opt_taintSources);
+		
+	    CommandLineParser parser = new BasicParser();
+	    CommandLine line = null;
+	    try {
+	        line = parser.parse( options, args );
+	    }
+	    catch( org.apache.commons.cli.ParseException exp ) {
+
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("java -jar phosphor.jar [OPTIONS] [input] [output]", options);
+	        System.err.println(exp.getMessage() );
+	        return;
 		}
+		if (line.hasOption("help") || line.getArgs().length != 2) {
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("java -jar phosphor.jar [OPTIONS] [input] [output]", options);
+			return;
+		}
+		
+		sourcesFile = line.getOptionValue("taintSources");
+		sinksFile = line.getOptionValue("taintSinks");
+		Configuration.MULTI_TAINTING = line.hasOption("multiTaint");
+		Configuration.IMPLICIT_TRACKING = line.hasOption("controlTrack");
+		Configuration.DATAFLOW_TRACKING = !line.hasOption("withoutDataTrack");
+		if(Configuration.IMPLICIT_TRACKING)
+			Configuration.MULTI_TAINTING = true;
+
+		Configuration.init();
+		
+		
+		if(Configuration.DATAFLOW_TRACKING)
+			System.out.println("Data flow tracking: enabled");
+		else
+			System.out.println("Data flow tracking: disabled");
+		if(Configuration.IMPLICIT_TRACKING)
+		{
+			System.out.println("Control flow tracking: enabled");
+		}
+		else
+			System.out.println("Control flow tracking: disabled");
+		
+		if(Configuration.MULTI_TAINTING)
+			System.out.println("Multi taint: enabled");
+		else
+			System.out.println("Taints will be combined with logical-or.");
+
 		TaintTrackingClassVisitor.IS_RUNTIME_INST = false;
 		ANALYZE_ONLY = true;
 		System.out.println("Starting analysis");
 //		preAnalysis();
-		_main(args);
+		_main(line.getArgs());
 		System.out.println("Analysis Completed: Beginning Instrumentation Phase");
 //		finishedAnalysis();
 		ANALYZE_ONLY = false;
-		_main(args);
+		_main(line.getArgs());
 		System.out.println("Done");
 
 	}

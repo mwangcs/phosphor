@@ -1,7 +1,6 @@
 package edu.columbia.cs.psl.phosphor.instrumenter;
 
-import java.util.Arrays;
-
+import edu.columbia.cs.psl.phosphor.Configuration;
 import edu.columbia.cs.psl.phosphor.TaintUtils;
 import edu.columbia.cs.psl.phosphor.instrumenter.analyzer.NeverNullArgAnalyzerAdapter;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Label;
@@ -10,7 +9,6 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.FrameNode;
 import edu.columbia.cs.psl.phosphor.runtime.TaintSentinel;
-import edu.columbia.cs.psl.phosphor.struct.TaintedInt;
 
 public class PrimitiveBoxingFixer extends TaintAdapter implements Opcodes {
 
@@ -45,7 +43,7 @@ public class PrimitiveBoxingFixer extends TaintAdapter implements Opcodes {
 		//				|| owner.equals(Type.getInternalName(Byte.class))
 		//				|| owner.equals(Type.getInternalName(Character.class))
 		//				|| owner.equals(Type.getInternalName(Short.class)) ||  owner.equals(Type.getInternalName(Float.class)) 
-				|| owner.equals(Type.getInternalName(Long.class)) || owner.equals(Type.getInternalName(Double.class))) && name.equals("valueOf$$INVIVO_PC") && nArgs == 2 && !argIsStr) {
+				|| owner.equals(Type.getInternalName(Long.class)) || owner.equals(Type.getInternalName(Double.class))) && name.equals("valueOf$$PHOSPHORTAGGED") && nArgs == 2 && !argIsStr) {
 			Type argT = Type.getArgumentTypes(desc)[1];
 			int argSize = argT.getSize();
 			if (argSize == 1) {
@@ -94,20 +92,22 @@ public class PrimitiveBoxingFixer extends TaintAdapter implements Opcodes {
 				super.visitLabel(makeNew);
 				fn.accept(this);
 
+				Type taintType = Type.getType(Configuration.TAINT_TAG_DESC);
+				
 				//VV T
 				int tmp = lvs.getTmpLV(argT);
-				int tmpT = lvs.getTmpLV(Type.getType("I"));
-				super.visitVarInsn(ISTORE, tmpT);
+				int tmpT = lvs.getTmpLV(taintType);
+				super.visitVarInsn(taintType.getOpcode(ISTORE), tmpT);
 				super.visitVarInsn(argT.getOpcode(ISTORE), tmp);
 				super.visitTypeInsn(Opcodes.NEW, owner);
 				super.visitInsn(Opcodes.DUP);
 				//T I N N
 
-				super.visitVarInsn(ILOAD, tmpT);
+				super.visitVarInsn(taintType.getOpcode(ILOAD), tmpT);
 				super.visitVarInsn(argT.getOpcode(ILOAD), tmp);
 
 				super.visitInsn(Opcodes.ACONST_NULL);
-				super.visitMethodInsn(Opcodes.INVOKESPECIAL, owner, "<init>", "(I" + Type.getArgumentTypes(desc)[1].getDescriptor() + Type.getDescriptor(TaintSentinel.class) + ")V", false);
+				super.visitMethodInsn(Opcodes.INVOKESPECIAL, owner, "<init>", "("+Configuration.TAINT_TAG_DESC + Type.getArgumentTypes(desc)[1].getDescriptor() + Type.getDescriptor(TaintSentinel.class) + ")V", false);
 				lvs.freeTmpLV(tmp);
 				lvs.freeTmpLV(tmpT);
 				super.visitLabel(isOK);
@@ -116,7 +116,7 @@ public class PrimitiveBoxingFixer extends TaintAdapter implements Opcodes {
 
 			}
 		} 
-//		else if (owner.equals(Type.getInternalName(Integer.class)) && name.equals("parseInt$$INVIVO_PC")) {
+//		else if (owner.equals(Type.getInternalName(Integer.class)) && name.equals("parseInt$$PHOSPHORTAGGED")) {
 //			if (nArgs == 2) {
 //				super.visitInsn(Opcodes.DUP);
 //				super.visitMethodInsn(opcode, owner, name, desc,itfc);
@@ -157,7 +157,7 @@ public class PrimitiveBoxingFixer extends TaintAdapter implements Opcodes {
 		//				|| owner.equals(Type.getInternalName(Float.class))
 		////				|| owner.equals(Type.getInternalName(Double.class))
 		//				)//TODO support strings and long/double
-		//				&& name.equals("valueOf$$INVIVO_PC") && nArgs == 1 && !argIsStr)		{
+		//				&& name.equals("valueOf$$PHOSPHORTAGGED") && nArgs == 1 && !argIsStr)		{
 		//			super.visitInsn(Opcodes.DUP_X1); //O T O
 		//			super.visitInsn(Opcodes.SWAP);//T O O
 		////			if(owner.equals("java/lang/String"))

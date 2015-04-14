@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
-import com.sun.org.apache.bcel.internal.generic.ISTORE;
-
+import edu.columbia.cs.psl.phosphor.Configuration;
 import edu.columbia.cs.psl.phosphor.TaintUtils;
 import edu.columbia.cs.psl.phosphor.instrumenter.analyzer.BasicArrayInterpreter;
 import edu.columbia.cs.psl.phosphor.instrumenter.analyzer.NeverNullArgAnalyzerAdapter;
@@ -20,6 +20,7 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Opcodes;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.Type;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.AbstractInsnNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.FrameNode;
+import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.IincInsnNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.InsnNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.LabelNode;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.LocalVariableNode;
@@ -30,10 +31,10 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Analyzer;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.AnalyzerException;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.BasicValue;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Frame;
-import edu.columbia.cs.psl.phosphor.struct.TaintedDouble;
-import edu.columbia.cs.psl.phosphor.struct.TaintedFloat;
-import edu.columbia.cs.psl.phosphor.struct.TaintedInt;
-import edu.columbia.cs.psl.phosphor.struct.TaintedLong;
+import edu.columbia.cs.psl.phosphor.struct.TaintedDoubleWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedFloatWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedIntWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedLongWithObjTag;
 
 public class PrimitiveArrayAnalyzer extends MethodVisitor {
 	final class PrimitiveArrayAnalyzerMN extends MethodNode {
@@ -370,6 +371,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 				HashMap<Integer, LinkedList<Integer>> edges = new HashMap<Integer, LinkedList<Integer>>();
 
 
+				LinkedList<Integer> varsStoredThisInsn = new LinkedList<Integer>();
 				@Override
 				protected void newControlFlowEdge(int insn, int successor) {
 					if (!edges.containsKey(successor))
@@ -380,6 +382,61 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 						outEdges.put(insn, new LinkedList<Integer>());
 					if (!outEdges.get(insn).contains(successor))
 						outEdges.get(insn).add(successor);
+
+					BasicBlock fromBlock;
+					if(!implicitAnalysisblocks.containsKey(insn))
+					{
+						//insn not added yet
+						fromBlock = new BasicBlock();
+						fromBlock.idx = insn;
+						fromBlock.insn = instructions.get(insn);
+						implicitAnalysisblocks.put(insn,fromBlock);
+					}
+					else
+						fromBlock = implicitAnalysisblocks.get(insn);
+
+					AbstractInsnNode insnN = instructions.get(insn);
+					fromBlock.isJump = (insnN.getType()== AbstractInsnNode.JUMP_INSN && insnN.getOpcode() != Opcodes.GOTO)
+							|| insnN.getType() == AbstractInsnNode.LOOKUPSWITCH_INSN || insnN.getType() == AbstractInsnNode.TABLESWITCH_INSN;
+					BasicBlock succesorBlock;
+					if(implicitAnalysisblocks.containsKey(successor))
+						succesorBlock = implicitAnalysisblocks.get(successor);
+					else
+					{
+						succesorBlock = new BasicBlock();
+						succesorBlock.idx = successor;
+						succesorBlock.insn = instructions.get(successor);
+						implicitAnalysisblocks.put(successor, succesorBlock);
+						if(succesorBlock.insn.getType() == AbstractInsnNode.IINC_INSN)
+						{
+							succesorBlock.varsWritten.add(((IincInsnNode)succesorBlock.insn).var);
+						}
+						else if(succesorBlock.insn.getType() == AbstractInsnNode.VAR_INSN)
+						{
+							switch(succesorBlock.insn.getOpcode())
+							{
+							case ISTORE:
+							case ASTORE:
+							case DSTORE:
+							case LSTORE:
+								succesorBlock.varsWritten.add(((VarInsnNode)succesorBlock.insn).var);
+								break;
+							}
+						}
+					}
+					fromBlock.successors.add(succesorBlock);
+					succesorBlock.predecessors.add(fromBlock);
+
+					if(fromBlock.isJump)
+						{
+						if(fromBlock.covered)
+							succesorBlock.onTrueSideOfJumpFrom.add(fromBlock);
+						else
+						{
+							succesorBlock.onFalseSideOfJumpFrom.add(fromBlock);
+							fromBlock.covered = true;
+						}
+						}
 					super.newControlFlowEdge(insn, successor);
 				}
 			};
@@ -517,31 +574,194 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 						this.localVariables.addAll(newLVNodes);
 					}
 				}
+
 			} catch (AnalyzerException e) {
 				e.printStackTrace();
 			}
+
+			if (Configuration.IMPLICIT_TRACKING) {
+				if (implicitAnalysisblocks.size() > 1) {
+					Stack<BasicBlock> stack = new Stack<PrimitiveArrayAnalyzer.BasicBlock>();
+					stack.add(implicitAnalysisblocks.get(0));
+					while (!stack.isEmpty()) {
+						BasicBlock b = stack.pop();
+						if (b.visited)
+							continue;
+						b.visited = true;
+						b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+						b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+						//Propogate markings to successors
+						for (BasicBlock s : b.successors) {
+							s.onFalseSideOfJumpFrom.addAll(b.onFalseSideOfJumpFrom);
+							s.onTrueSideOfJumpFrom.addAll(b.onTrueSideOfJumpFrom);
+							s.resolvedBlocks.addAll(b.resolvedBlocks);
+
+							s.onFalseSideOfJumpFrom.remove(s);
+							s.onTrueSideOfJumpFrom.remove(s);
+							if (!s.visited)
+								stack.add(s);
+						}
+					}
+					//						calculatePostDominators(implicitAnalysisblocks.get(0));
+					for (BasicBlock b : implicitAnalysisblocks.values()) {
+						//						System.out.println(b.domBlocks);
+						for (BasicBlock d : b.onFalseSideOfJumpFrom) {
+							if (b.onTrueSideOfJumpFrom.contains(d)) {
+								b.resolvedBlocks.add(d);
+								b.resolvedHereBlocks.add(d);
+							}
+						}
+						if (b.resolvedBlocks.size() > 0) {
+							b.onTrueSideOfJumpFrom.removeAll(b.resolvedBlocks);
+							b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+							//							System.out.println("!!Remove " + b.resolvedBlocks + " at " + b.idx + " - " + b.insn);
+						}
+						b.visited = false;
+						//						System.out.println(b.insn + " dom: "  + b.domBlocks +", antidom: " + b.antiDomBlocks);
+					}
+					stack = new Stack<PrimitiveArrayAnalyzer.BasicBlock>();
+					stack.add(implicitAnalysisblocks.get(0));
+					while (!stack.isEmpty()) {
+						BasicBlock b = stack.pop();
+						if (b.visited)
+							continue;
+						b.visited = true;
+						b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+						b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+						//Propogate markings to successors
+						for (BasicBlock s : b.successors) {
+							s.onFalseSideOfJumpFrom.addAll(b.onFalseSideOfJumpFrom);
+							s.onTrueSideOfJumpFrom.addAll(b.onTrueSideOfJumpFrom);
+							s.resolvedBlocks.addAll(b.resolvedBlocks);
+							if (!s.visited)
+								stack.add(s);
+						}
+					}
+					//						calculatePostDominators(implicitAnalysisblocks.get(0));
+					boolean hadChanges = true;
+					while (hadChanges) {
+						hadChanges = false;
+						for (BasicBlock b : implicitAnalysisblocks.values()) {
+							HashSet<BasicBlock> remove = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+							for (BasicBlock r : b.resolvedHereBlocks) {
+								for (BasicBlock p : b.predecessors)
+									if (p.resolvedBlocks.contains(r)) {
+										remove.add(r);
+										hadChanges = true;
+									}
+							}
+							b.visited =false;
+							b.resolvedHereBlocks.removeAll(remove);
+						}
+					}
+					for(BasicBlock j : implicitAnalysisblocks.values())
+					{
+						if(j.isJump)
+						{
+							stack = new Stack<PrimitiveArrayAnalyzer.BasicBlock>();
+							stack.addAll(j.successors);
+							while(!stack.isEmpty())
+							{
+								BasicBlock b = stack.pop();
+								if(b.visited)
+									continue;
+								b.visited = true;
+								if(b.onFalseSideOfJumpFrom.contains(j))
+								{
+									j.varsWrittenTrueSide.addAll(b.varsWritten);
+									stack.addAll(b.successors);
+								}
+								else if(b.onTrueSideOfJumpFrom.contains(j))
+								{
+									j.varsWrittenFalseSide.addAll(b.varsWritten);
+									stack.addAll(b.successors);
+								}
+							}
+						}
+					}
+					HashMap<BasicBlock, Integer> jumpIDs = new HashMap<PrimitiveArrayAnalyzer.BasicBlock, Integer>();
+					int jumpID = 0;
+					for (BasicBlock b : implicitAnalysisblocks.values()) {
+						if (b.isJump) {
+							jumpID++;
+							HashSet<Integer> common = new HashSet<Integer>();
+							common.addAll(b.varsWrittenFalseSide);
+							common.retainAll(b.varsWrittenTrueSide);
+							HashSet<Integer> diff =new HashSet<Integer>();
+							diff.addAll(b.varsWrittenTrueSide);
+							diff.addAll(b.varsWrittenFalseSide);
+							diff.removeAll(common);
+
+							for(int i : diff)
+							{
+								instructions.insertBefore(b.insn, new VarInsnNode(TaintUtils.FORCE_CTRL_STORE, i));
+
+							}
+							instructions.insertBefore(b.insn, new VarInsnNode(TaintUtils.BRANCH_START, jumpID));
+
+							jumpIDs.put(b, jumpID);
+						}
+					}
+					for (BasicBlock b : implicitAnalysisblocks.values()) {
+						for (BasicBlock r : b.resolvedHereBlocks) {
+							//								System.out.println("Resolved: " + jumpIDs.get(r) + " at " + b.idx);
+							//								System.out.println("GOt" + jumpIDs);
+							AbstractInsnNode insn = b.insn;
+							while (insn.getType() == AbstractInsnNode.FRAME || insn.getType() == AbstractInsnNode.LINE || insn.getType() == AbstractInsnNode.LABEL)
+								insn = insn.getNext();
+							instructions.insertBefore(insn, new VarInsnNode(TaintUtils.BRANCH_END, jumpIDs.get(r)));
+						}
+						//						System.out.println(b.insn + " - " + b.domBlocks + "-" + b.antiDomBlocks);
+					}
+					nJumps = jumpID;
+				}
+
+			}
 			this.accept(cmv);
 		}
+		HashMap<Integer,BasicBlock> implicitAnalysisblocks = new HashMap<Integer,PrimitiveArrayAnalyzer.BasicBlock>();
 
-		private void computeVarsAccessed(Integer i, HashMap<Integer, BasicBlock> cfg) {
-			if(!cfg.containsKey(i) || cfg.get(i).covered)
+		void calculatePostDominators(BasicBlock b)
+		{
+			if(b.visited)
 				return;
-			BasicBlock t = cfg.get(i);
-			t.covered = true;
-			for(Integer j : t.outEdges)
+			b.visited = true;
+			b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+			b.onFalseSideOfJumpFrom.removeAll(b.resolvedBlocks);
+			//Propogate markings to successors
+			for(BasicBlock s : b.successors)
 			{
-				if(cfg.containsKey(j)){
-					computeVarsAccessed(j, cfg);
-					t.varsAccessed.addAll(cfg.get(j).varsAccessed);
-				}
+				s.onFalseSideOfJumpFrom.addAll(b.onFalseSideOfJumpFrom);
+				s.onTrueSideOfJumpFrom.addAll(b.onTrueSideOfJumpFrom);
+				s.resolvedBlocks.addAll(b.resolvedBlocks);
+				if(!s.visited)
+					calculatePostDominators(s);
 			}
 		}
+
 	}
 	static class BasicBlock{
 		int idx;
 		LinkedList<Integer> outEdges = new LinkedList<Integer>();
+		HashSet<BasicBlock> successors = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+		HashSet<BasicBlock> predecessors  = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+		AbstractInsnNode insn;
 		boolean covered;
-		HashSet<Integer> varsAccessed = new HashSet<Integer>();
+		boolean visited;
+		boolean isJump;
+		HashSet<BasicBlock> resolvedHereBlocks = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+
+		HashSet<BasicBlock> resolvedBlocks = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+		HashSet<BasicBlock> onFalseSideOfJumpFrom = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+		HashSet<BasicBlock> onTrueSideOfJumpFrom = new HashSet<PrimitiveArrayAnalyzer.BasicBlock>();
+		HashSet<Integer> varsWritten = new HashSet<Integer>();
+
+		HashSet<Integer> varsWrittenTrueSide = new HashSet<Integer>();
+		HashSet<Integer> varsWrittenFalseSide = new HashSet<Integer>();
+		@Override
+		public String toString() {
+			return insn.toString();
+		}
 	}
 	private static boolean isPrimitiveArrayType(BasicValue v) {
 		if (v == null || v.getType() == null)
@@ -559,19 +779,19 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 		{
 		case Opcodes.ISTORE:
 		case Opcodes.ILOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
 			break;
 		case Opcodes.LSTORE:
 		case Opcodes.LLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
 			break;
 		case Opcodes.FSTORE:
 		case Opcodes.FLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
 			break;
 		case Opcodes.DSTORE:
 		case Opcodes.DLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
 			break;
 		}
 
@@ -585,30 +805,32 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 		{
 		case Opcodes.PUTSTATIC:
 			if(desc.equals("I"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
 			else if(desc.equals("D"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
 			else if(desc.equals("F"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
 			else if(desc.equals( "J"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
 			break;
 		case Opcodes.GETSTATIC:
 		case Opcodes.PUTFIELD:
 			if(desc.equals("I"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
 			else if(desc.equals("D"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
 			else if(desc.equals("F"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
 			else if(desc.equals( "J"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
 			break;
 		case Opcodes.GETFIELD:
 		}
 
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}
+	public int nJumps;
+
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itfc) {
 		super.visitMethodInsn(opcode, owner, name, desc,itfc);

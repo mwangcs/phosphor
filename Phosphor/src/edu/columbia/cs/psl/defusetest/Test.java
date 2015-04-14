@@ -21,7 +21,6 @@ public class Test {
 		Test t= new Test();
 		t.testField();
 
-
 	}
 
 	public static void testmethod(int a, double b, float f, long l){
@@ -59,7 +58,7 @@ public class Test {
 		float f = ffield;
 		long l = lfield;
 		l = lstatic;
-		//System.out.println(l);
+		System.out.println(l);
 	}
 }
 
