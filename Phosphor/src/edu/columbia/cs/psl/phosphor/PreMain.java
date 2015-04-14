@@ -33,12 +33,12 @@ import edu.columbia.cs.psl.phosphor.struct.TaintedByteArray;
 public class PreMain {
     private static Instrumentation instrumentation;
 
-    static boolean DEBUG = false;
+    static boolean DEBUG = true;
 
 	public static ClassLoader bigLoader = PreMain.class.getClassLoader();
 	public static final class PCLoggingTransformer implements ClassFileTransformer {
 		private final class HackyClassWriter extends ClassWriter {
-			
+
 			private HackyClassWriter(ClassReader classReader, int flags) {
 				super(classReader, flags);
 			}
@@ -55,7 +55,7 @@ public class PreMain {
 				}
 				catch(Throwable e)
 				{
-					throw new ClassNotFoundException(); 
+					throw new ClassNotFoundException();
 				}
 			}
 			protected String getCommonSuperClass(String type1, String type2) {
@@ -88,10 +88,10 @@ public class PreMain {
 				}
 			}
 		}
-		
+
 
 		static boolean innerException = false;
-		
+
 		public TaintedByteArray transform$$INVIVO_PC(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, int[] classtaint, byte[] classfileBuffer, TaintedByteArray ret) throws IllegalClassFormatException
 		{
 	        bigLoader = loader;
@@ -103,7 +103,7 @@ public class PreMain {
 			ret.taint = new int[ret.val.length];
 			return ret;
 		}
-		
+
 		public byte[] transform(ClassLoader loader, final String className2, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
 			ClassReader cr = new ClassReader(classfileBuffer);
 			String className = cr.getClassName();
@@ -153,7 +153,7 @@ public class PreMain {
 			//Find out if this class already has frames
 			TraceClassVisitor cv =null;
 			try {
-				
+
 				ClassWriter cw = new HackyClassWriter(cr, ClassWriter.COMPUTE_MAXS);
 
 				cr.accept(
@@ -161,7 +161,7 @@ public class PreMain {
 						new SerialVersionUIDAdder(new TaintTrackingClassVisitor(cw, skipFrames))
 						//									)
 						, ClassReader.EXPAND_FRAMES);
-				
+
 
 				if (DEBUG) {
 					File debugDir = new File("debug");
@@ -186,7 +186,7 @@ public class PreMain {
 //					cr = new ClassReader(cw.toByteArray());
 //					cr.accept(
 ////							new CheckClassAdapter(
-//									cv	
+//									cv
 ////									)
 //							, 0);
 //					PrintWriter pw = null;

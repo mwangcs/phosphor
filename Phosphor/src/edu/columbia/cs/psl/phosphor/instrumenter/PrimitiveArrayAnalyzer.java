@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.ISTORE;
+
 import edu.columbia.cs.psl.phosphor.TaintUtils;
 import edu.columbia.cs.psl.phosphor.instrumenter.analyzer.BasicArrayInterpreter;
 import edu.columbia.cs.psl.phosphor.instrumenter.analyzer.NeverNullArgAnalyzerAdapter;
@@ -28,6 +30,10 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Analyzer;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.AnalyzerException;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.BasicValue;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Frame;
+import edu.columbia.cs.psl.phosphor.struct.TaintedDouble;
+import edu.columbia.cs.psl.phosphor.struct.TaintedFloat;
+import edu.columbia.cs.psl.phosphor.struct.TaintedInt;
+import edu.columbia.cs.psl.phosphor.struct.TaintedLong;
 
 public class PrimitiveArrayAnalyzer extends MethodVisitor {
 	final class PrimitiveArrayAnalyzerMN extends MethodNode {
@@ -71,16 +77,16 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 		//				}
 		//				super.visitVarInsn(opcode, var);
 		//			}
-		 private  void visitFrameTypes(final int n, final Object[] types,
-		            final List<Object> result) {
-		        for (int i = 0; i < n; ++i) {
-		            Object type = types[i];
-		            result.add(type);
-		            if (type == Opcodes.LONG || type == Opcodes.DOUBLE) {
-		                result.add(Opcodes.TOP);
-		            }
-		        }
-		    }
+		private  void visitFrameTypes(final int n, final Object[] types,
+				final List<Object> result) {
+			for (int i = 0; i < n; ++i) {
+				Object type = types[i];
+				result.add(type);
+				if (type == Opcodes.LONG || type == Opcodes.DOUBLE) {
+					result.add(Opcodes.TOP);
+				}
+			}
+		}
 
 		FrameNode generateFrameNode(int type, int nLocal, Object[] local, int nStack, Object[] stack)
 		{
@@ -285,14 +291,14 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 						//														System.out.println(idx + "->"+label);
 					}
 					Frame<BasicValue>[] ret = super.analyze(owner, m);
-//					if (DEBUG)
-//						for (int i = 0; i < inFrames.size(); i++) {
-//							System.out.println("IN: " + i + " " + inFrames.get(i).stack);
-//						}
-//					if (DEBUG)
-//						for (int i = 0; i < outFrames.size(); i++) {
-//							System.out.println("OUT: " + i + " " + (outFrames.get(i) == null ? "null" : outFrames.get(i).stack));
-//						}
+					//					if (DEBUG)
+					//						for (int i = 0; i < inFrames.size(); i++) {
+					//							System.out.println("IN: " + i + " " + inFrames.get(i).stack);
+					//						}
+					//					if (DEBUG)
+					//						for (int i = 0; i < outFrames.size(); i++) {
+					//							System.out.println("OUT: " + i + " " + (outFrames.get(i) == null ? "null" : outFrames.get(i).stack));
+					//						}
 
 					for (Integer successor : edges.keySet()) {
 						if (edges.get(successor).size() > 1) {
@@ -316,7 +322,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 										output1Top = outFrames.get(labelToMerge).stack.get(outFrames.get(labelToMerge).stack.size() - 2);
 									if (inputTop == Opcodes.TOP)
 										inputTop = inFrames.get(labelToSuccessor).stack.get(inFrames.get(labelToSuccessor).stack.size() - 2);
-//									System.out.println(className+"."+name+ " IN"+inputTop +" OUT " + output1Top);
+									//									System.out.println(className+"."+name+ " IN"+inputTop +" OUT " + output1Top);
 									if (output1Top != null && output1Top != inputTop) {
 										Type inputTopType = TaintAdapter.getTypeForStackType(inputTop);
 										Type outputTopType = TaintAdapter.getTypeForStackType(output1Top);
@@ -333,18 +339,18 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 									for (int i = 0; i < Math.min(outFrames.get(labelToMerge).local.size(), inFrames.get(labelToSuccessor).local.size()); i++) {
 										Object out = outFrames.get(labelToMerge).local.get(i);
 										Object in = inFrames.get(labelToSuccessor).local.get(i);
-//										System.out.println(name +" " +out + " out, " + in + " In" + " i "+i);
+										//										System.out.println(name +" " +out + " out, " + in + " In" + " i "+i);
 										if (out instanceof String && in instanceof String) {
 											Type tout = Type.getObjectType((String) out);
 											Type tin = Type.getObjectType((String) in);
 											if (tout.getSort() == Type.ARRAY && tout.getElementType().getSort() != Type.OBJECT && tout.getDimensions() == 1 && tin.getSort() == Type.OBJECT) {
 												int insnN = getLastInsnByLabel(labelToMerge);
-//												System.out.println(name+desc);
-//																							System.out.println(outFrames + " out, " + in + " In" + " i "+i);
-//												System.out.println("T1::"+tout + " to " + tin + " this may be unsupported but should be handled by the above! in label " + instructions.get(insnN));
-//												System.out.println("In insn is " + getFirstInsnByLabel(labelToSuccessor));
-//												System.out.println("insn after frame is " + insnN +", " + instructions.get(insnN) + "<"+instructions.get(insnN).getOpcode());
-//													System.out.println(inFrames.get(labelToSuccessor).local);
+												//												System.out.println(name+desc);
+												//																							System.out.println(outFrames + " out, " + in + " In" + " i "+i);
+												//												System.out.println("T1::"+tout + " to " + tin + " this may be unsupported but should be handled by the above! in label " + instructions.get(insnN));
+												//												System.out.println("In insn is " + getFirstInsnByLabel(labelToSuccessor));
+												//												System.out.println("insn after frame is " + insnN +", " + instructions.get(insnN) + "<"+instructions.get(insnN).getOpcode());
+												//													System.out.println(inFrames.get(labelToSuccessor).local);
 												if (!alwaysAutoBoxByFrame.containsKey(insnN))
 													alwaysAutoBoxByFrame.put(insnN, new LinkedList<Integer>());
 												alwaysAutoBoxByFrame.get(insnN).add(i);
@@ -362,7 +368,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 				}
 
 				HashMap<Integer, LinkedList<Integer>> edges = new HashMap<Integer, LinkedList<Integer>>();
-				
+
 
 				@Override
 				protected void newControlFlowEdge(int insn, int successor) {
@@ -380,30 +386,30 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 			try {
 
 				Frame<BasicValue>[] frames = a.analyze(className, this);
-//				HashMap<Integer,BasicBlock> cfg = new HashMap<Integer, BasicBlock>();
-//				for(Integer i : outEdges.keySet())
-//				{
-//					BasicBlock b = new BasicBlock();
-//					b.idx = i;
-//					b.outEdges = outEdges.get(i);
-//					int endIdx = this.instructions.size();
-//					for(Integer jj : outEdges.get(i))
-//						if(i < endIdx)
-//							endIdx = jj;
-//					for(int j =i; j < endIdx; j++)
-//					{
-//						if(instructions.get(i) instanceof VarInsnNode)
-//						{
-//							VarInsnNode n = ((VarInsnNode) instructions.get(i));
-//							b.varsAccessed.add(n.var);
-//						}
-//					}
-//					cfg.put(i, b);
-//				}
-//				for(Integer i : cfg.keySet())
-//				{
-//					computeVarsAccessed(i,cfg);
-//				}
+				//				HashMap<Integer,BasicBlock> cfg = new HashMap<Integer, BasicBlock>();
+				//				for(Integer i : outEdges.keySet())
+				//				{
+				//					BasicBlock b = new BasicBlock();
+				//					b.idx = i;
+				//					b.outEdges = outEdges.get(i);
+				//					int endIdx = this.instructions.size();
+				//					for(Integer jj : outEdges.get(i))
+				//						if(i < endIdx)
+				//							endIdx = jj;
+				//					for(int j =i; j < endIdx; j++)
+				//					{
+				//						if(instructions.get(i) instanceof VarInsnNode)
+				//						{
+				//							VarInsnNode n = ((VarInsnNode) instructions.get(i));
+				//							b.varsAccessed.add(n.var);
+				//						}
+				//					}
+				//					cfg.put(i, b);
+				//				}
+				//				for(Integer i : cfg.keySet())
+				//				{
+				//					computeVarsAccessed(i,cfg);
+				//				}
 				ArrayList<Integer> toAddNullBefore = new ArrayList<Integer>();
 				toAddNullBefore.addAll(insertACONSTNULLBEFORE);
 
@@ -436,18 +442,18 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 						if (insertAfter.getOpcode() == Opcodes.GOTO)
 							insertAfter = insertAfter.getPrevious();
 						for (int j : neverAutoBoxByFrame.get(i)) {
-//							System.out.println("Adding nevefbox: before " + i + " (plus " + nNewNulls + ")");
+							//							System.out.println("Adding nevefbox: before " + i + " (plus " + nNewNulls + ")");
 
 							this.instructions.insert(insertAfter, new VarInsnNode(TaintUtils.NEVER_AUTOBOX, j));
 							nNewNulls++;
 						}
 					} else if (alwaysAutoBoxByFrame.containsKey(i)) {
 						for (int j : alwaysAutoBoxByFrame.get(i)) {
-//							System.out.println("Adding checkcast always: before " + i + " (plus " + nNewNulls + ")");
-//								while(insertAfter.getType() == AbstractInsnNode.LABEL || 
-//										insertAfter.getType() == AbstractInsnNode.LINE|| 
-//										insertAfter.getType() == AbstractInsnNode.FRAME)
-//									insertAfter = insertAfter.getNext();
+							//							System.out.println("Adding checkcast always: before " + i + " (plus " + nNewNulls + ")");
+							//								while(insertAfter.getType() == AbstractInsnNode.LABEL ||
+							//										insertAfter.getType() == AbstractInsnNode.LINE||
+							//										insertAfter.getType() == AbstractInsnNode.FRAME)
+							//									insertAfter = insertAfter.getNext();
 							AbstractInsnNode query = insertAfter.getNext();
 							while(query.getNext() != null && (query.getType() == AbstractInsnNode.LABEL || query.getType() == AbstractInsnNode.LINE || query.getType() == AbstractInsnNode.FRAME))
 								query = query.getNext();
@@ -456,7 +462,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 							if(insertAfter.getType() == AbstractInsnNode.JUMP_INSN)
 							{
 								insertAfter = insertAfter.getPrevious();
-//								System.out.println("insertbefore  : " + ((JumpInsnNode) insertAfter.getNext()).toString());
+								//								System.out.println("insertbefore  : " + ((JumpInsnNode) insertAfter.getNext()).toString());
 								if(insertAfter.getNext().getOpcode() != Opcodes.GOTO)
 								{
 
@@ -464,25 +470,25 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 								}
 								else
 								{
-//									System.out.println("box immediately");
+									//									System.out.println("box immediately");
 									this.instructions.insert(insertAfter, new VarInsnNode(TaintUtils.ALWAYS_AUTOBOX, j));
 								}
 							}
 							else
 							{
-//								System.out.println("InsertAfter: " + insertAfter);
+								//								System.out.println("InsertAfter: " + insertAfter);
 								this.instructions.insert(insertAfter, new VarInsnNode(TaintUtils.ALWAYS_AUTOBOX, j));
 							}
 							nNewNulls++;
 						}
 					}
 				}
-//				System.out.println(name+desc);
+				//				System.out.println(name+desc);
 				//fix LVs for android (sigh)
-//				for(LabelNode l : problemLabels.keySet())
-//				{
-//					System.out.println("Problem label: "+l);
-//				}
+				//				for(LabelNode l : problemLabels.keySet())
+				//				{
+				//					System.out.println("Problem label: "+l);
+				//				}
 				boolean hadChanges = true;
 				while (hadChanges) {
 					hadChanges = false;
@@ -494,7 +500,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 							LabelNode veryEnd = lv.end;
 							while (toCheck != null && toCheck != lv.end) {
 								if ((toCheck.getOpcode() == TaintUtils.ALWAYS_BOX_JUMP || toCheck.getOpcode() ==TaintUtils.ALWAYS_AUTOBOX) && ((VarInsnNode) toCheck).var == lv.index) {
-//									System.out.println("LV " + lv.name + " will be a prob around " + toCheck);
+									//									System.out.println("LV " + lv.name + " will be a prob around " + toCheck);
 									LabelNode beforeProblem = new LabelNode(new Label());
 									LabelNode afterProblem = new LabelNode(new Label());
 									this.instructions.insertBefore(toCheck, beforeProblem);
@@ -545,7 +551,64 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 
 	static final boolean DEBUG = false;
 	public HashSet<Type> wrapperTypesToPreAlloc = new HashSet<Type>();
-	
+
+	@Override
+	public void visitVarInsn(int opcode, int var) {
+		/* For def use */
+		switch(opcode)
+		{
+		case Opcodes.ISTORE:
+		case Opcodes.ILOAD:
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+			break;
+		case Opcodes.LSTORE:
+		case Opcodes.LLOAD:
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+			break;
+		case Opcodes.FSTORE:
+		case Opcodes.FLOAD:
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+			break;
+		case Opcodes.DSTORE:
+		case Opcodes.DLOAD:
+			wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+			break;
+		}
+
+		super.visitVarInsn(opcode, var);
+	}
+	@Override
+	public void visitFieldInsn(int opcode, String owner, String name,
+			String desc) {
+		/* For def use */
+		switch(opcode)
+		{
+		case Opcodes.PUTSTATIC:
+			if(desc.equals("I"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+			else if(desc.equals("D"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+			else if(desc.equals("F"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+			else if(desc.equals( "J"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+			break;
+		case Opcodes.GETSTATIC:
+		case Opcodes.PUTFIELD:
+			if(desc.equals("I"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedInt.class));
+			else if(desc.equals("D"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedDouble.class));
+			else if(desc.equals("F"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloat.class));
+			else if(desc.equals( "J"))
+				wrapperTypesToPreAlloc.add(Type.getType(TaintedLong.class));
+			break;
+		case Opcodes.GETFIELD:
+		}
+
+		super.visitFieldInsn(opcode, owner, name, desc);
+	}
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itfc) {
 		super.visitMethodInsn(opcode, owner, name, desc,itfc);

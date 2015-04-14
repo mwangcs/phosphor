@@ -39,9 +39,9 @@ public class TaintUtils {
 	public static final boolean OPT_IGNORE_EXTRA_TAINTS = true;
 	public static final boolean OPT_CONSTANT_ARITHMETIC = true;
 	public static final boolean OPT_USE_STACK_ONLY = false; //avoid using LVs where possible if true
-	
+
 	public static final boolean MULTI_TAINT = false;
-	
+
 	public static final int RAW_INSN = 201;
 	public static final int NO_TAINT_STORE_INSN = 202;
 	public static final int IGNORE_EVERYTHING = 203;
@@ -57,7 +57,7 @@ public class TaintUtils {
 	public static final int ALWAYS_UNBOX_JUMP = 212;
 	public static final int IS_TMP_STORE = 213;
 
-	
+
 	public static final String TAINT_FIELD = "INVIVO_PC_TAINT";
 	public static final String HAS_TAINT_FIELD = "INVIVO_IS_TAINTED";
 	public static final String IS_TAINT_SEATCHING_FIELD = "INVIVO_IS_TAINT_SEARCHING";
@@ -213,7 +213,7 @@ public class TaintUtils {
 		else
 			VMSystem.arraycopy0(src, srcPos, dest, destPos, length);
 	}
-	
+
 	public static void arraycopy(Object srcTaint, Object src, int srcPosTaint, int srcPos, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
 		throw new ArrayStoreException("Can't copy from src with taint to dest w/o taint!");
 	}
@@ -235,7 +235,7 @@ public class TaintUtils {
 	}
 	public static void arraycopyVM(Object srcTaint, Object src, int srcPosTaint, int srcPos, Object destTaint, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
 		VMSystem.arraycopy0(src, srcPos, dest, destPos, length);
-		
+
 //		if (VM.isBooted$$INVIVO_PC(new TaintedBoolean()).val && srcTaint != null && destTaint != null) {
 //			if(srcPos == 0 && length <= Array.getLength(destTaint) && length <= Array.getLength(srcTaint))
 //		System.out.println(src);
@@ -254,32 +254,32 @@ public class TaintUtils {
 	{
 		bar++;
 	}
-	public static void arraycopyHarmony(Object src, int srcPosTaint, int srcPos, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
-		if(!src.getClass().isArray())
-		{
-			VMMemoryManager.arrayCopy(((MultiDTaintedArray)src).getVal(), srcPos, ((MultiDTaintedArray)dest).getVal(), destPos, length);
-			VMMemoryManager.arrayCopy(((MultiDTaintedArray)src).taint, srcPos, ((MultiDTaintedArray)dest).taint, destPos, length);
-		}
-		else
-		{
-			VMMemoryManager.arrayCopy(src, srcPos, dest, destPos, length);
-		}
-//		dest = src;
-	}
-	public static void arraycopyHarmony(Object srcTaint, Object src, int srcPosTaint, int srcPos, Object destTaint, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
-//		System.err.println("OK");
-		VMMemoryManager.arrayCopy(src, srcPos, dest, destPos, length);
-//		System.arraycopy(src, srcPos, dest, destPos, length);
-//		dest = src;
-//		if (VM.isBooted$$INVIVO_PC(new TaintedBoolean()).val && srcTaint != null && destTaint != null) {
-//			if(srcPos == 0 && length <= Array.getLength(destTaint) && length <= Array.getLength(srcTaint))
-//		System.out.println(src);
-//		System.out.println(srcTaint);
-		if(srcTaint != null && destTaint != null && srcTaint.getClass() == destTaint.getClass())
-			VMMemoryManager.arrayCopy(srcTaint, srcPos, destTaint, destPos, length);
+//	public static void arraycopyHarmony(Object src, int srcPosTaint, int srcPos, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
+//		if(!src.getClass().isArray())
+//		{
+//			VMMemoryManager.arrayCopy(((MultiDTaintedArray)src).getVal(), srcPos, ((MultiDTaintedArray)dest).getVal(), destPos, length);
+//			VMMemoryManager.arrayCopy(((MultiDTaintedArray)src).taint, srcPos, ((MultiDTaintedArray)dest).taint, destPos, length);
 //		}
-
-	}
+//		else
+//		{
+//			VMMemoryManager.arrayCopy(src, srcPos, dest, destPos, length);
+//		}
+////		dest = src;
+//	}
+//	public static void arraycopyHarmony(Object srcTaint, Object src, int srcPosTaint, int srcPos, Object destTaint, Object dest, int destPosTaint, int destPos, int lengthTaint, int length) {
+////		System.err.println("OK");
+//		VMMemoryManager.arrayCopy(src, srcPos, dest, destPos, length);
+////		System.arraycopy(src, srcPos, dest, destPos, length);
+////		dest = src;
+////		if (VM.isBooted$$INVIVO_PC(new TaintedBoolean()).val && srcTaint != null && destTaint != null) {
+////			if(srcPos == 0 && length <= Array.getLength(destTaint) && length <= Array.getLength(srcTaint))
+////		System.out.println(src);
+////		System.out.println(srcTaint);
+//		if(srcTaint != null && destTaint != null && srcTaint.getClass() == destTaint.getClass())
+//			VMMemoryManager.arrayCopy(srcTaint, srcPos, destTaint, destPos, length);
+////		}
+//
+//	}
 	public static Object getShadowTaintTypeForFrame(String typeDesc) {
 		Type t = Type.getType(typeDesc);
 		if (t.getSort() == Type.OBJECT || t.getSort() == Type.VOID)
@@ -330,7 +330,7 @@ public class TaintUtils {
 		case Type.ARRAY:
 			if (originalReturnType.getDimensions() > 1)
 			{
-				
+
 				switch (originalReturnType.getElementType().getSort()) {
 				case Type.BYTE:
 				case Type.BOOLEAN:

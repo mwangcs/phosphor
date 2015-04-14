@@ -1,0 +1,1988 @@
+
+  @Ledu/columbia/cs/psl/phosphor/runtime/TaintInstrumented;() // invisible
+// class version 50.0 (50)
+// access flags 0x21
+public class edu/columbia/cs/psl/defusetest/Test implements edu/columbia/cs/psl/phosphor/struct/Tainted edu/columbia/cs/psl/phosphor/struct/Tainted  {
+
+  // compiled from: Test.java
+
+  @Ledu/columbia/cs/psl/phosphor/runtime/TaintInstrumented;() // invisible
+
+  // access flags 0x8
+  static F fl
+
+  // access flags 0x18
+  final static J serialVersionUID = 8593770482136232399
+
+  // access flags 0x1
+  public I INVIVO_PC_TAINT = 0
+
+  // access flags 0x9
+  public static I flINVIVO_PC_TAINT = 0
+
+  // access flags 0x9
+  public static I serialVersionUIDINVIVO_PC_TAINT = 0
+
+  // access flags 0x8
+  static <clinit>()V
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 0
+   L1
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 1
+   L2
+   L3
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 2
+   L4
+    LINENUMBER 30 L4
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    LDC 1.1234
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "<clinit>"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 30
+    ALOAD 2
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIFLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "<clinit>"
+    ICONST_0
+    BIPUSH 30
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IFLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    PUTSTATIC edu/columbia/cs/psl/defusetest/Test.fl : F
+    PUTSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINT : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "<clinit>"
+    ICONST_0
+    BIPUSH 30
+    ALOAD 0
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    PUTSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINT : I
+    PUTSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINTINVIVO_PC_TAINT : I
+    RETURN
+    MAXSTACK = 11
+    MAXLOCALS = 3
+   L5
+
+  // access flags 0x1
+  public <init>()V
+   L0
+   L1
+    LINENUMBER 4 L1
+    ALOAD 0
+    INVOKESPECIAL java/lang/Object.<init> ()V
+    RETURN
+   L2
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+    MAXSTACK = 1
+    MAXLOCALS = 1
+   L3
+
+  // access flags 0x9
+  public static main([Ljava/lang/String;)V
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 1
+   L1
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 2
+   L2
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedLong
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedLong.<init> ()V
+    ASTORE 3
+   L3
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedDouble
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedDouble.<init> ()V
+    ASTORE 4
+   L4
+   L5
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 5
+   L6
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 6
+   L7
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedLong
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedLong.<init> ()V
+    ASTORE 7
+   L8
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedDouble
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedDouble.<init> ()V
+    ASTORE 8
+   L9
+    LINENUMBER 6 L9
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 10
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 6
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+   L10
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 6
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L11
+    ISTORE 9
+    ISTORE 10
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 6
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L12
+    ISTORE 11
+    ISTORE 12
+   L13
+    LINENUMBER 7 L13
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 20
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 7
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 7
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 9
+    ISTORE 10
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 7
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 11
+    ISTORE 12
+   L14
+    LINENUMBER 8 L14
+    ILOAD 12
+    ILOAD 11
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 8
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 10
+    ILOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 8
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 8
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 8
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+   L15
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 8
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L16
+    ISTORE 13
+    ISTORE 14
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 8
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L17
+    ISTORE 15
+    ISTORE 16
+   L18
+    LINENUMBER 9 L18
+    ILOAD 12
+    ILOAD 11
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 9
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 10
+    ILOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 9
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 9
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 9
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+   L19
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 9
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L20
+    ISTORE 17
+    ISTORE 18
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 9
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L21
+    ISTORE 19
+    ISTORE 20
+   L22
+    LINENUMBER 10 L22
+    GOTO L23
+   L24
+   L25
+    LINENUMBER 11 L25
+   FRAME FULL [[Ljava/lang/String; edu/columbia/cs/psl/phosphor/struct/TaintedInt edu/columbia/cs/psl/phosphor/struct/TaintedFloat edu/columbia/cs/psl/phosphor/struct/TaintedLong edu/columbia/cs/psl/phosphor/struct/TaintedDouble edu/columbia/cs/psl/phosphor/struct/TaintedInt edu/columbia/cs/psl/phosphor/struct/TaintedFloat edu/columbia/cs/psl/phosphor/struct/TaintedLong edu/columbia/cs/psl/phosphor/struct/TaintedDouble I I I I I I I I I I I I] []
+    ILOAD 12
+    ILOAD 11
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 11
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 10
+    ILOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 11
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 11
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 11
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 11
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 13
+    ISTORE 14
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 11
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 15
+    ISTORE 16
+   L26
+    LINENUMBER 12 L26
+    IINC 9 -5
+   L23
+    LINENUMBER 10 L23
+   FRAME FULL [[Ljava/lang/String; edu/columbia/cs/psl/phosphor/struct/TaintedInt edu/columbia/cs/psl/phosphor/struct/TaintedFloat edu/columbia/cs/psl/phosphor/struct/TaintedLong edu/columbia/cs/psl/phosphor/struct/TaintedDouble edu/columbia/cs/psl/phosphor/struct/TaintedInt edu/columbia/cs/psl/phosphor/struct/TaintedFloat edu/columbia/cs/psl/phosphor/struct/TaintedLong edu/columbia/cs/psl/phosphor/struct/TaintedDouble I I I I I I I I I I I I] []
+    ILOAD 12
+    ILOAD 11
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 10
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 10
+    ILOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 10
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 10
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    ICONST_1
+    DUP2_X2
+    POP2
+    POP
+    POP
+   L27
+    ISTORE 21
+   L28
+    ISTORE 22
+   L29
+    ISTORE 23
+   L30
+    ISTORE 24
+   L31
+    ISTORE 25
+   L32
+    ISTORE 26
+    ILOAD 24
+    ILOAD 23
+    ILOAD 22
+    ILOAD 21
+    ILOAD 26
+    ILOAD 25
+    ILOAD 24
+    ILOAD 23
+    ILOAD 22
+    ILOAD 21
+   L33
+   L34
+   L35
+   L36
+   L37
+   L38
+    POP2
+    POP
+    POP
+    POP
+    SWAP
+    POP
+    DUP2_X1
+    POP2
+    POP
+    IF_ICMPGT L25
+   L39
+   L40
+    LINENUMBER 14 L40
+    ILOAD 20
+    ILOAD 19
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 14
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 18
+    ILOAD 17
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 14
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 14
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 14
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 14
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 13
+    ISTORE 14
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 14
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ISTORE 15
+    ISTORE 16
+   L41
+    LINENUMBER 15 L41
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    LDC 1.1
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 15
+    ALOAD 8
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIDLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    ICONST_0
+    SWAP
+   L42
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 15
+    ALOAD 4
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IDLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+   L43
+    DSTORE 27
+    ISTORE 29
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 15
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L44
+    ISTORE 30
+    ISTORE 31
+   L45
+    LINENUMBER 16 L45
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    LDC 1.1
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 16
+    ALOAD 6
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIFLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    ICONST_0
+    SWAP
+   L46
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 16
+    ALOAD 2
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IFLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+   L47
+    FSTORE 32
+    ISTORE 33
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 16
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L48
+    ISTORE 34
+    ISTORE 35
+   L49
+    LINENUMBER 17 L49
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    LCONST_1
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 17
+    ALOAD 7
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIJLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    ICONST_0
+    SWAP
+   L50
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 17
+    ALOAD 3
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IJLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+   L51
+    LSTORE 36
+    ISTORE 38
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 17
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L52
+    ISTORE 39
+    ISTORE 40
+   L53
+    LINENUMBER 18 L53
+    NEW edu/columbia/cs/psl/defusetest/Test
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/defusetest/Test.<init> ()V
+    ASTORE 41
+   L54
+    LINENUMBER 19 L54
+    ALOAD 41
+    ILOAD 12
+    ILOAD 11
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 10
+    ILOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 19
+    ALOAD 5
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    ILOAD 31
+    ILOAD 30
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 29
+    DLOAD 27
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 4
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IDLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 19
+    ALOAD 8
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIDLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    ICONST_0
+    SWAP
+    ILOAD 35
+    ILOAD 34
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 33
+    FLOAD 32
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 2
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IFLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 19
+    ALOAD 6
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIFLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    ICONST_0
+    SWAP
+    ILOAD 40
+    ILOAD 39
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 1
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 38
+    LLOAD 36
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    BIPUSH 19
+    ALOAD 3
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IJLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "main"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 19
+    ALOAD 7
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIJLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    ICONST_0
+    SWAP
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.testmethod$$INVIVO_PC$$INVIVO_PC (IIIIIIIDIIIFIIIJ)V
+   L55
+    LINENUMBER 21 L55
+    RETURN
+   L56
+    LOCALVARIABLE args [Ljava/lang/String; L9 L56 0
+   L57
+    LOCALVARIABLE phosphorReturnPreAlloc3 Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble; L3 L57 4
+    LOCALVARIABLE phosphorShadowLVFor11XX5 I L12 L57 12
+    LOCALVARIABLE phosphorShadowLVFor17XX8 I L20 L57 18
+    LOCALVARIABLE phosphorShadowLVFor36XX20 I L51 L57 38
+    LOCALVARIABLE phosphorShadowLVFor9XX4 I L11 L57 10
+    LOCALVARIABLE phosphorShadowLV12 I L29 L35 23
+    LOCALVARIABLE phosphorReturnPreAlloc1 Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat; L1 L57 2
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L0 L57 1
+    LOCALVARIABLE phosphorShadowLV14 I L31 L37 25
+    LOCALVARIABLE phosphorShadowLVFor39XX21 I L52 L57 40
+    LOCALVARIABLE phosphorShadowLVFor13XX6 I L16 L57 14
+    LOCALVARIABLE phosphorShadowLVFor19XX9 I L21 L57 20
+    LOCALVARIABLE phosphorShadowLV13 I L30 L36 24
+    LOCALVARIABLE phosphorShadowLVFor15XX7 I L17 L57 16
+    LOCALVARIABLE phosphorShadowLVFor34XX19 I L48 L57 35
+    LOCALVARIABLE phosphorShadowLV15 I L32 L38 26
+    LOCALVARIABLE phosphorShadowLV10 I L27 L33 21
+    LOCALVARIABLE phosphorShadowLV11 I L28 L34 22
+    LOCALVARIABLE phosphorShadowLVFor32XX18 I L47 L57 33
+    LOCALVARIABLE phosphorReturnPreAlloc2 Ledu/columbia/cs/psl/phosphor/struct/TaintedLong; L2 L57 3
+    LOCALVARIABLE phosphorShadowLVFor30XX17 I L44 L57 31
+    LOCALVARIABLE phosphorShadowLVFor27XX16 I L43 L57 29
+    LOCALVARIABLE phosphorShadowLVFor5XX4 I L10 L56 11
+    LOCALVARIABLE phosphorShadowLVFor11XX7 I L42 L56 30
+    LOCALVARIABLE phosphorReturnPreAlloc3 Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble; L8 L56 8
+    LOCALVARIABLE phosphorShadowLVFor14XX8 I L46 L56 34
+    LOCALVARIABLE phosphorReturnPreAlloc1 Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat; L6 L56 6
+    LOCALVARIABLE phosphorShadowLVFor9XX6 I L19 L56 19
+    LOCALVARIABLE phosphorReturnPreAlloc2 Ledu/columbia/cs/psl/phosphor/struct/TaintedLong; L7 L56 7
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L5 L56 5
+    LOCALVARIABLE phosphorShadowLVFor16XX9 I L50 L56 39
+    LOCALVARIABLE phosphorShadowLVFor7XX5 I L15 L56 15
+    LOCALVARIABLE a I L13 L56 9
+    LOCALVARIABLE a2 I L18 L56 13
+    LOCALVARIABLE a3 I L22 L56 17
+    LOCALVARIABLE b D L45 L56 27
+    LOCALVARIABLE f F L49 L56 32
+    LOCALVARIABLE l J L53 L56 36
+    LOCALVARIABLE t Ledu/columbia/cs/psl/defusetest/Test; L54 L56 41
+    MAXSTACK = 27
+    MAXLOCALS = 42
+
+  // access flags 0x1
+  public testmethod$$INVIVO_PC_orig$$INVIVO_PC(IIIIIIIDIIIFIIIJ)V
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 19
+   L1
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 20
+   L2
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedLong
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedLong.<init> ()V
+    ASTORE 21
+   L3
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedDouble
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedDouble.<init> ()V
+    ASTORE 22
+   L4
+   L5
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 23
+   L6
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 24
+   L7
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedLong
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedLong.<init> ()V
+    ASTORE 25
+   L8
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedDouble
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedDouble.<init> ()V
+    ASTORE 26
+   L9
+    LINENUMBER 34 L9
+    ILOAD 1
+    ILOAD 2
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 34
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 3
+    ILOAD 4
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 34
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 34
+    ALOAD 23
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 34
+    ALOAD 23
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+   L10
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 34
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L11
+    ISTORE 27
+    ISTORE 28
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 34
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L12
+    ISTORE 29
+    ISTORE 30
+   L13
+    LINENUMBER 35 L13
+    ILOAD 5
+    ILOAD 6
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 35
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 7
+    DLOAD 8
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 35
+    ALOAD 22
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IDLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 35
+    ALOAD 26
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIDLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 35
+    ALOAD 26
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIDLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    ICONST_0
+    SWAP
+   L14
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 35
+    ALOAD 22
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IDLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+   L15
+    DSTORE 31
+    ISTORE 33
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 35
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L16
+    ISTORE 34
+    ISTORE 35
+   L17
+    LINENUMBER 36 L17
+    ILOAD 14
+    ILOAD 15
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 36
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ILOAD 16
+    LLOAD 17
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 36
+    ALOAD 21
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IJLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 36
+    ALOAD 25
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIJLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 36
+    ALOAD 25
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIJLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    ICONST_0
+    SWAP
+   L18
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 36
+    ALOAD 21
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IJLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+   L19
+    LSTORE 36
+    ISTORE 38
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 36
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L20
+    ISTORE 39
+    ISTORE 40
+   L21
+    LINENUMBER 37 L21
+    GETSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINTINVIVO_PC_TAINT : I
+    GETSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINT : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 37
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    GETSTATIC edu/columbia/cs/psl/defusetest/Test.flINVIVO_PC_TAINT : I
+    GETSTATIC edu/columbia/cs/psl/defusetest/Test.fl : F
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 37
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 37
+    ALOAD 23
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC$$INVIVO_PC (IIIILjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    SWAP
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ICONST_0
+    BIPUSH 37
+    ALOAD 24
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC$$INVIVO_PC (IIIFLjava/lang/String;Ljava/lang/String;IIIILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    ICONST_0
+    SWAP
+   L22
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 37
+    ALOAD 20
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IFLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+   L23
+    FSTORE 41
+    ISTORE 42
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC_orig$$INVIVO_PC"
+    ICONST_0
+    BIPUSH 37
+    ALOAD 19
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logDef$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L24
+    ISTORE 43
+    ISTORE 44
+   L25
+    LINENUMBER 42 L25
+    RETURN
+   L26
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L9 L26 0
+   L27
+    LOCALVARIABLE phosphorReturnPreAlloc3 Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble; L3 L27 22
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L0 L27 19
+    LOCALVARIABLE phosphorShadowLVFor39XX9 I L20 L27 40
+    LOCALVARIABLE phosphorShadowLVFor27XX4 I L11 L27 28
+    LOCALVARIABLE phosphorShadowLVFor36XX8 I L19 L27 38
+    LOCALVARIABLE phosphorShadowLVFor29XX5 I L12 L27 30
+    LOCALVARIABLE phosphorReturnPreAlloc1 Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat; L1 L27 20
+    LOCALVARIABLE phosphorShadowLVFor41XX10 I L23 L27 42
+    LOCALVARIABLE phosphorShadowLVFor34XX7 I L16 L27 35
+    LOCALVARIABLE phosphorShadowLVFor31XX6 I L15 L27 33
+    LOCALVARIABLE phosphorShadowLVFor43XX11 I L24 L27 44
+    LOCALVARIABLE phosphorReturnPreAlloc2 Ledu/columbia/cs/psl/phosphor/struct/TaintedLong; L2 L27 21
+    LOCALVARIABLE phosphorShadowLVFor23XX7 I L22 L26 43
+    LOCALVARIABLE phosphorReturnPreAlloc1 Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat; L6 L26 24
+    LOCALVARIABLE phosphorReturnPreAlloc3 Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble; L8 L26 26
+    LOCALVARIABLE phosphorReturnPreAlloc2 Ledu/columbia/cs/psl/phosphor/struct/TaintedLong; L7 L26 25
+    LOCALVARIABLE phosphorShadowLVFor17XX5 I L14 L26 34
+    LOCALVARIABLE phosphorShadowLVFor15XX4 I L10 L26 29
+    LOCALVARIABLE phosphorShadowLVFor20XX6 I L18 L26 39
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L5 L26 23
+    LOCALVARIABLE a_TAINT_TAINT I L9 L26 1
+    LOCALVARIABLE a_TAINT I L9 L26 2
+    LOCALVARIABLE a_TAINT I L9 L26 3
+    LOCALVARIABLE a I L9 L26 4
+    LOCALVARIABLE b_TAINT_TAINT I L9 L26 5
+    LOCALVARIABLE b_TAINT I L9 L26 6
+    LOCALVARIABLE b_TAINT I L9 L26 7
+    LOCALVARIABLE b D L9 L26 8
+    LOCALVARIABLE f_TAINT_TAINT I L9 L26 10
+    LOCALVARIABLE f_TAINT I L9 L26 11
+    LOCALVARIABLE f_TAINT I L9 L26 12
+    LOCALVARIABLE f F L9 L26 13
+    LOCALVARIABLE l_TAINT_TAINT I L9 L26 14
+    LOCALVARIABLE l_TAINT I L9 L26 15
+    LOCALVARIABLE l_TAINT I L9 L26 16
+    LOCALVARIABLE l J L9 L26 17
+    LOCALVARIABLE i I L13 L26 27
+    LOCALVARIABLE j D L17 L26 31
+    LOCALVARIABLE lg J L21 L26 36
+    LOCALVARIABLE ff F L25 L26 41
+    MAXSTACK = 12
+    MAXLOCALS = 45
+
+  // access flags 0x1
+  public equals$$INVIVO_PC(Ljava/lang/Object;Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;)Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;
+   L0
+   L1
+    ALOAD 0
+    ALOAD 1
+    INVOKESPECIAL java/lang/Object.equals (Ljava/lang/Object;)Z
+    ICONST_0
+    SWAP
+   L2
+    ALOAD 2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.val : Z
+    ALOAD 2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.taint : I
+    ALOAD 2
+    ARETURN
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+    LOCALVARIABLE other Ljava/lang/Object; L1 L2 1
+    LOCALVARIABLE PHOSPHORPREALLOCRETURNHAHA Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean; L1 L2 2
+    MAXSTACK = 3
+    MAXLOCALS = 3
+   L3
+
+  // access flags 0x1
+  public hashCode$$INVIVO_PC(Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+   L0
+   L1
+    ALOAD 0
+    INVOKESPECIAL java/lang/Object.hashCode ()I
+    ICONST_0
+    SWAP
+   L2
+    ALOAD 1
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ALOAD 1
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ALOAD 1
+    ARETURN
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+    MAXSTACK = 3
+    MAXLOCALS = 2
+   L3
+
+  // access flags 0x1
+  public getINVIVO_PC_TAINT$$INVIVO_PC(Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+   L0
+    ALOAD 0
+    DUP
+    GETFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINTINVIVO_PC_TAINT : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINT : I
+    ALOAD 1
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ALOAD 1
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    ALOAD 1
+    ARETURN
+    MAXSTACK = 3
+    MAXLOCALS = 2
+   L1
+
+  // access flags 0x1
+  public setINVIVO_PC_TAINT$$INVIVO_PC(II)V
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 3
+   L1
+    ALOAD 0
+    ILOAD 1
+    ILOAD 2
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "setINVIVO_PC_TAINT$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ALOAD 3
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    DUP2_X1
+    POP2
+    DUP_X2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINT : I
+    PUTFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINTINVIVO_PC_TAINT : I
+    RETURN
+    MAXSTACK = 8
+    MAXLOCALS = 4
+   L2
+
+  // access flags 0x1
+  public testmethod$$INVIVO_PC(IIIDIFIJ)V
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 11
+   L1
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedFloat
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedFloat.<init> ()V
+    ASTORE 12
+   L2
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedLong
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedLong.<init> ()V
+    ASTORE 13
+   L3
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedDouble
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedDouble.<init> ()V
+    ASTORE 14
+   L4
+   L5
+    ALOAD 0
+    ICONST_0
+    ICONST_0
+    ILOAD 1
+    ILOAD 2
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ALOAD 11
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IILjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ICONST_0
+    ICONST_0
+    ILOAD 3
+    DLOAD 4
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ALOAD 14
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IDLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedDouble;)Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedDouble.val : D
+    ICONST_0
+    ICONST_0
+    ILOAD 6
+    FLOAD 7
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ALOAD 12
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IFLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedFloat;)Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedFloat.val : F
+    ICONST_0
+    ICONST_0
+    ILOAD 8
+    LLOAD 9
+    LDC "edu/columbia/cs/psl/defusetest/Test"
+    LDC "testmethod$$INVIVO_PC"
+    ICONST_0
+    ICONST_0
+    ALOAD 13
+    INVOKESTATIC edu/columbia/cs/psl/defuse/DefUseLogger.logUse$$INVIVO_PC (IJLjava/lang/String;Ljava/lang/String;IILedu/columbia/cs/psl/phosphor/struct/TaintedLong;)Ledu/columbia/cs/psl/phosphor/struct/TaintedLong;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedLong.val : J
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.testmethod$$INVIVO_PC$$INVIVO_PC (IIIIIIIDIIIFIIIJ)V
+   L6
+    RETURN
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L5 L6 0
+   L7
+    LOCALVARIABLE phosphorReturnPreAlloc1 Ledu/columbia/cs/psl/phosphor/struct/TaintedFloat; L1 L7 12
+    LOCALVARIABLE phosphorReturnPreAlloc3 Ledu/columbia/cs/psl/phosphor/struct/TaintedDouble; L3 L7 14
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L0 L7 11
+    LOCALVARIABLE phosphorReturnPreAlloc2 Ledu/columbia/cs/psl/phosphor/struct/TaintedLong; L2 L7 13
+    LOCALVARIABLE a_TAINT I L5 L6 1
+    LOCALVARIABLE a I L5 L6 2
+    LOCALVARIABLE b_TAINT I L5 L6 3
+    LOCALVARIABLE b D L5 L6 4
+    LOCALVARIABLE f_TAINT I L5 L6 6
+    LOCALVARIABLE f F L5 L6 7
+    LOCALVARIABLE l_TAINT I L5 L6 8
+    LOCALVARIABLE l J L5 L6 9
+    MAXSTACK = 24
+    MAXLOCALS = 15
+
+  // access flags 0x1
+  public equals$$INVIVO_PC_orig(Ljava/lang/Object;Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;)Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 3
+   L1
+   L2
+    ALOAD 0
+    ALOAD 1
+    DUP
+    DUP
+    INSTANCEOF [Ledu/columbia/cs/psl/phosphor/struct/multid/MultiDTaintedArray;
+    ICONST_0
+    SWAP
+    DUP2_X1
+    POP2
+    INSTANCEOF edu/columbia/cs/psl/phosphor/struct/multid/MultiDTaintedArray
+    ICONST_0
+    SWAP
+   L3
+    ISTORE 4
+    SWAP
+    ILOAD 4
+   L4
+    IOR
+    DUP_X2
+    POP
+    IOR
+    SWAP
+    SWAP
+    POP
+    IFEQ L5
+   L6
+    INVOKESTATIC edu/columbia/cs/psl/phosphor/struct/multid/MultiDTaintedArray.unboxRaw (Ljava/lang/Object;)Ljava/lang/Object;
+   L5
+   FRAME FULL [edu/columbia/cs/psl/defusetest/Test java/lang/Object edu/columbia/cs/psl/phosphor/struct/TaintedBoolean edu/columbia/cs/psl/phosphor/struct/TaintedInt] [edu/columbia/cs/psl/defusetest/Test java/lang/Object]
+    ALOAD 2
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.equals$$INVIVO_PC (Ljava/lang/Object;Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;)Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.val : Z
+    ALOAD 2
+    DUP_X2
+    POP
+    DUP2_X1
+    POP2
+    DUP_X2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.val : Z
+    POP2
+    ALOAD 2
+    ICONST_0
+    ICONST_0
+    DUP2_X1
+    POP2
+    DUP_X2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.taint : I
+    POP2
+    ALOAD 2
+   L7
+    ARETURN
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L2 L7 0
+   L8
+    LOCALVARIABLE phosphorShadowLV1 I L3 L4 4
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L0 L8 3
+    LOCALVARIABLE phosphorNativeWrapArg1 Ljava/lang/Object; L2 L7 1
+    LOCALVARIABLE phosphorReturnHolder Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean; L2 L7 2
+    MAXSTACK = 7
+    MAXLOCALS = 5
+
+  // access flags 0x1
+  public hashCode$$INVIVO_PC_orig(Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+   L0
+   L1
+    ALOAD 0
+    ALOAD 1
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.hashCode$$INVIVO_PC (Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    DUP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    SWAP
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    ALOAD 1
+    DUP_X2
+    POP
+    DUP2_X1
+    POP2
+    DUP_X2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+    POP2
+    ALOAD 1
+    ICONST_0
+    ICONST_0
+    DUP2_X1
+    POP2
+    DUP_X2
+    SWAP
+    PUTFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.taint : I
+    POP2
+    ALOAD 1
+   L2
+    ARETURN
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+    LOCALVARIABLE phosphorReturnHolder Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L1 L2 1
+    MAXSTACK = 5
+    MAXLOCALS = 2
+   L3
+
+  // access flags 0x1
+  public I INVIVO_PC_TAINT = 0
+
+  // access flags 0x9
+  public static I flINVIVO_PC_TAINT = 0
+
+  // access flags 0x9
+  public static I serialVersionUIDINVIVO_PC_TAINT = 0
+
+  // access flags 0x1
+  public I INVIVO_PC_TAINTINVIVO_PC_TAINT
+
+  // access flags 0x9
+  public static I flINVIVO_PC_TAINTINVIVO_PC_TAINT = 0
+
+  // access flags 0x9
+  public static I serialVersionUIDINVIVO_PC_TAINTINVIVO_PC_TAINT = 0
+
+  // access flags 0x1
+  public getINVIVO_PC_TAINT()I
+    ALOAD 0
+    GETFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINT : I
+    IRETURN
+    MAXSTACK = 0
+    MAXLOCALS = 0
+
+  // access flags 0x1
+  public setINVIVO_PC_TAINT(I)V
+    ALOAD 0
+    ILOAD 1
+    PUTFIELD edu/columbia/cs/psl/defusetest/Test.INVIVO_PC_TAINT : I
+    RETURN
+    MAXSTACK = 0
+    MAXLOCALS = 0
+
+  // access flags 0x1
+  public testmethod$$INVIVO_PC_orig(IIIDIFIJ)V
+   L0
+    LINENUMBER 0 L0
+    ALOAD 0
+    ICONST_0
+    ILOAD 1
+    ICONST_0
+    ILOAD 2
+    ICONST_0
+    ILOAD 3
+    ICONST_0
+    DLOAD 4
+    ICONST_0
+    ILOAD 6
+    ICONST_0
+    FLOAD 7
+    ICONST_0
+    ILOAD 8
+    ICONST_0
+    LLOAD 9
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.testmethod$$INVIVO_PC_orig$$INVIVO_PC (IIIIIIIDIIIFIIIJ)V
+   L1
+    RETURN
+    MAXSTACK = 19
+    MAXLOCALS = 11
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L0 L1 0
+    LOCALVARIABLE a_TAINT I L0 L1 1
+    LOCALVARIABLE a I L0 L1 2
+    LOCALVARIABLE b_TAINT I L0 L1 3
+    LOCALVARIABLE b D L0 L1 4
+    LOCALVARIABLE f_TAINT I L0 L1 6
+    LOCALVARIABLE f F L0 L1 7
+    LOCALVARIABLE l_TAINT I L0 L1 8
+    LOCALVARIABLE l J L0 L1 9
+   L2
+
+  // access flags 0x1
+  public equals(Ljava/lang/Object;)Z
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedBoolean
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.<init> ()V
+    ASTORE 2
+   L1
+    LINENUMBER 0 L1
+    ALOAD 0
+    ALOAD 1
+    ALOAD 2
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.equals$$INVIVO_PC (Ljava/lang/Object;Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;)Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean;
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedBoolean.val : Z
+   L2
+    IRETURN
+    MAXSTACK = 3
+    MAXLOCALS = 3
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+   L3
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedBoolean; L0 L3 2
+    LOCALVARIABLE other Ljava/lang/Object; L1 L2 1
+
+  // access flags 0x1
+  public hashCode()I
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 1
+   L1
+    LINENUMBER 0 L1
+    ALOAD 0
+    ALOAD 1
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.hashCode$$INVIVO_PC (Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L2
+    IRETURN
+    MAXSTACK = 2
+    MAXLOCALS = 2
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L1 L2 0
+   L3
+    LOCALVARIABLE phosphorReturnPreAlloc0 Ledu/columbia/cs/psl/phosphor/struct/TaintedInt; L0 L3 1
+
+  // access flags 0x1
+  public getINVIVO_PC_TAINT()I
+   L0
+    NEW edu/columbia/cs/psl/phosphor/struct/TaintedInt
+    DUP
+    INVOKESPECIAL edu/columbia/cs/psl/phosphor/struct/TaintedInt.<init> ()V
+    ASTORE 1
+   L1
+    LINENUMBER 0 L1
+    ALOAD 0
+    ALOAD 1
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.getINVIVO_PC_TAINT$$INVIVO_PC (Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;)Ledu/columbia/cs/psl/phosphor/struct/TaintedInt;
+    GETFIELD edu/columbia/cs/psl/phosphor/struct/TaintedInt.val : I
+   L2
+    IRETURN
+    MAXSTACK = 2
+    MAXLOCALS = 2
+   L3
+
+  // access flags 0x1
+  public setINVIVO_PC_TAINT(I)V
+   L0
+    LINENUMBER 0 L0
+    ALOAD 0
+    ICONST_0
+    ILOAD 1
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.setINVIVO_PC_TAINT$$INVIVO_PC (II)V
+   L1
+    RETURN
+    MAXSTACK = 3
+    MAXLOCALS = 2
+   L2
+
+  // access flags 0x1
+  public testmethod(IDFJ)V
+   L0
+    LINENUMBER 0 L0
+    ALOAD 0
+    ICONST_0
+    ILOAD 1
+    ICONST_0
+    DLOAD 2
+    ICONST_0
+    FLOAD 4
+    ICONST_0
+    LLOAD 5
+    INVOKEVIRTUAL edu/columbia/cs/psl/defusetest/Test.testmethod$$INVIVO_PC (IIIDIFIJ)V
+   L1
+    RETURN
+    MAXSTACK = 11
+    MAXLOCALS = 7
+    LOCALVARIABLE this Ledu/columbia/cs/psl/defusetest/Test; L0 L1 0
+    LOCALVARIABLE a I L0 L1 1
+    LOCALVARIABLE b D L0 L1 2
+    LOCALVARIABLE f F L0 L1 4
+    LOCALVARIABLE l J L0 L1 5
+   L2
+}
