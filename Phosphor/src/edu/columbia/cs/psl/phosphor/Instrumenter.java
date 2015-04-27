@@ -147,7 +147,7 @@ public class Instrumenter {
 					m.getMethodsCalled().add(mm);
 			}
 			if (callsTaintSourceMethods(mm)) {
-				//				boolean wasPure = m.isPure(); 
+				//				boolean wasPure = m.isPure();
 				//				boolean wasCallsTainted = m.callsTaintSourceMethods();
 				m.setPure(false);
 				m.setCallsTaintedMethods(true);
@@ -311,7 +311,7 @@ public class Instrumenter {
 		//		}
 		//		catch(Throwable t)
 		//		{
-		//			
+		//
 		//		}
 		//		notInterfaces.add(internalName);
 		return false;
@@ -331,7 +331,7 @@ public class Instrumenter {
 		{
 //			System.out.println("IN ANDROID INST:");
 			return owner.startsWith("java/lang/Object")
-					|| owner.startsWith("java/lang/Number") || owner.startsWith("java/lang/Comparable") 
+					|| owner.startsWith("java/lang/Number") || owner.startsWith("java/lang/Comparable")
 					|| owner.startsWith("java/lang/ref/SoftReference") || owner.startsWith("java/lang/ref/Reference")
 					|| owner.startsWith("java/lang/ref/FinalizerReference")
 					//																|| owner.startsWith("java/awt/image/BufferedImage")
@@ -347,7 +347,7 @@ public class Instrumenter {
 //					|| owner.startsWith("java/lang/System")
 //					|| owner.startsWith("org/apache/harmony/drlvm/gc_gen/GCHelper")
 //					|| owner.startsWith("edu/columbia/cs/psl/microbench")
-//					|| owner.startsWith("java/lang/Number") 
+//					|| owner.startsWith("java/lang/Number")
 					|| owner.startsWith("java/lang/VMObject")
 					|| owner.startsWith("java/lang/VMString")
 					|| (IS_KAFFE_INST && owner.startsWith("java/lang/reflect"))
@@ -453,13 +453,15 @@ public class Instrumenter {
 	static Option opt_dataTrack = new Option("withoutDataTrack", "Disable taint tracking through data flow (on by default)");
 	static Option opt_controlTrack = new Option("controlTrack", "Enable taint tracking through control flow");
 	static Option opt_multiTaint = new Option("multiTaint", "Support for 2^32 tags instead of just 32");
+	static Option opt_defUse = new Option("defUse", "Perform def-use logging");
+
 	static Option help = new Option( "help", "print this message" );
 
 	public static String sourcesFile;
 	public static String sinksFile;
-	
+
 	public static void main(String[] args) {
-		
+
 		Options options = new Options();
 		options.addOption(help);
 		options.addOption(opt_multiTaint);
@@ -467,7 +469,8 @@ public class Instrumenter {
 		options.addOption(opt_dataTrack);
 		options.addOption(opt_taintSinks);
 		options.addOption(opt_taintSources);
-		
+		options.addOption(opt_defUse);
+
 	    CommandLineParser parser = new BasicParser();
 	    CommandLine line = null;
 	    try {
@@ -485,18 +488,21 @@ public class Instrumenter {
 			formatter.printHelp("java -jar phosphor.jar [OPTIONS] [input] [output]", options);
 			return;
 		}
-		
+
 		sourcesFile = line.getOptionValue("taintSources");
 		sinksFile = line.getOptionValue("taintSinks");
 		Configuration.MULTI_TAINTING = line.hasOption("multiTaint");
 		Configuration.IMPLICIT_TRACKING = line.hasOption("controlTrack");
 		Configuration.DATAFLOW_TRACKING = !line.hasOption("withoutDataTrack");
+		Configuration.DEF_USE_LOGGING = line.hasOption("defUse");
+		if(Configuration.DEF_USE_LOGGING)
+			Configuration.MULTI_TAINTING = true;
 		if(Configuration.IMPLICIT_TRACKING)
 			Configuration.MULTI_TAINTING = true;
 
 		Configuration.init();
-		
-		
+
+
 		if(Configuration.DATAFLOW_TRACKING)
 			System.out.println("Data flow tracking: enabled");
 		else
@@ -507,7 +513,7 @@ public class Instrumenter {
 		}
 		else
 			System.out.println("Control flow tracking: disabled");
-		
+
 		if(Configuration.MULTI_TAINTING)
 			System.out.println("Multi taint: enabled");
 		else

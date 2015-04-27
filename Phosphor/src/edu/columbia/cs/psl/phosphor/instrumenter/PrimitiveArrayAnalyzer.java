@@ -31,10 +31,14 @@ import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Analyzer;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.AnalyzerException;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.BasicValue;
 import edu.columbia.cs.psl.phosphor.org.objectweb.asm.tree.analysis.Frame;
+import edu.columbia.cs.psl.phosphor.struct.TaintedBooleanWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedByteWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedCharWithObjTag;
 import edu.columbia.cs.psl.phosphor.struct.TaintedDoubleWithObjTag;
 import edu.columbia.cs.psl.phosphor.struct.TaintedFloatWithObjTag;
 import edu.columbia.cs.psl.phosphor.struct.TaintedIntWithObjTag;
 import edu.columbia.cs.psl.phosphor.struct.TaintedLongWithObjTag;
+import edu.columbia.cs.psl.phosphor.struct.TaintedShortWithObjTag;
 
 public class PrimitiveArrayAnalyzer extends MethodVisitor {
 	final class PrimitiveArrayAnalyzerMN extends MethodNode {
@@ -428,7 +432,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 					succesorBlock.predecessors.add(fromBlock);
 
 					if(fromBlock.isJump)
-						{
+					{
 						if(fromBlock.covered)
 							succesorBlock.onTrueSideOfJumpFrom.add(fromBlock);
 						else
@@ -436,7 +440,7 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 							succesorBlock.onFalseSideOfJumpFrom.add(fromBlock);
 							fromBlock.covered = true;
 						}
-						}
+					}
 					super.newControlFlowEdge(insn, successor);
 				}
 			};
@@ -775,25 +779,29 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 	@Override
 	public void visitVarInsn(int opcode, int var) {
 		/* For def use */
-		switch(opcode)
-		{
-		case Opcodes.ISTORE:
-		case Opcodes.ILOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
-			break;
-		case Opcodes.LSTORE:
-		case Opcodes.LLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
-			break;
-		case Opcodes.FSTORE:
-		case Opcodes.FLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
-			break;
-		case Opcodes.DSTORE:
-		case Opcodes.DLOAD:
-			wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
-			break;
-		}
+		if (Configuration.DEF_USE_LOGGING)
+			switch (opcode) {
+			case Opcodes.ISTORE:
+			case Opcodes.ILOAD:
+				wrapperTypesToPreAlloc.add(Type
+						.getType(TaintedIntWithObjTag.class));
+				break;
+			case Opcodes.LSTORE:
+			case Opcodes.LLOAD:
+				wrapperTypesToPreAlloc.add(Type
+						.getType(TaintedLongWithObjTag.class));
+				break;
+			case Opcodes.FSTORE:
+			case Opcodes.FLOAD:
+				wrapperTypesToPreAlloc.add(Type
+						.getType(TaintedFloatWithObjTag.class));
+				break;
+			case Opcodes.DSTORE:
+			case Opcodes.DLOAD:
+				wrapperTypesToPreAlloc.add(Type
+						.getType(TaintedDoubleWithObjTag.class));
+				break;
+			}
 
 		super.visitVarInsn(opcode, var);
 	}
@@ -801,31 +809,38 @@ public class PrimitiveArrayAnalyzer extends MethodVisitor {
 	public void visitFieldInsn(int opcode, String owner, String name,
 			String desc) {
 		/* For def use */
-		switch(opcode)
-		{
-		case Opcodes.PUTSTATIC:
-			if(desc.equals("I"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
-			else if(desc.equals("D"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
-			else if(desc.equals("F"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
-			else if(desc.equals( "J"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
-			break;
-		case Opcodes.GETSTATIC:
-		case Opcodes.PUTFIELD:
-			if(desc.equals("I"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedIntWithObjTag.class));
-			else if(desc.equals("D"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedDoubleWithObjTag.class));
-			else if(desc.equals("F"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedFloatWithObjTag.class));
-			else if(desc.equals( "J"))
-				wrapperTypesToPreAlloc.add(Type.getType(TaintedLongWithObjTag.class));
-			break;
-		case Opcodes.GETFIELD:
-		}
+		if (Configuration.DEF_USE_LOGGING)
+			switch (opcode) {
+			case Opcodes.PUTSTATIC:
+			case Opcodes.GETSTATIC:
+			case Opcodes.PUTFIELD:
+			case Opcodes.GETFIELD:
+				if (desc.equals("I"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedIntWithObjTag.class));
+				else if (desc.equals("D"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedDoubleWithObjTag.class));
+				else if (desc.equals("F"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedFloatWithObjTag.class));
+				else if (desc.equals("J"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedLongWithObjTag.class));
+				else if (desc.equals("S"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedShortWithObjTag.class));
+				else if (desc.equals("C"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedCharWithObjTag.class));
+				else if (desc.equals("B"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedByteWithObjTag.class));
+				else if (desc.equals("Z"))
+					wrapperTypesToPreAlloc.add(Type
+							.getType(TaintedBooleanWithObjTag.class));
+				break;
+			}
 
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}

@@ -27,6 +27,27 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 		{
 		case Type.OBJECT:
 		case Type.ARRAY:
+			if(opcode == Opcodes.PUTSTATIC || opcode == Opcodes.PUTFIELD)
+			{
+				super.visitInsn(Opcodes.DUP);
+				super.visitLdcInsn(className);
+				super.visitLdcInsn(methodName);
+				super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
+				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
+				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;I)V", false);
+			}
+			else
+			{
+				super.visitFieldInsn(opcode, owner, name, desc);
+				super.visitInsn(Opcodes.DUP);
+				super.visitLdcInsn(className);
+				super.visitLdcInsn(methodName);
+				super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
+				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
+				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;I)V", false);
+
+				return;
+			}
 			break;
 		case Type.INT:
 		case Type.BOOLEAN:
@@ -41,7 +62,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 				//Variable being stored is at this location on stack
 				super.visitLdcInsn(className);
 				super.visitLdcInsn(methodName);
-				super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+				super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
@@ -52,15 +73,15 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 				super.visitFieldInsn(opcode, owner, name, desc);
 				super.visitLdcInsn(className);
 				super.visitLdcInsn(methodName);
-				super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+				super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 				super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 				super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "("+desc+"Ljava/lang/String;Ljava/lang/String;I)"+desc, false);
 				return;
 			}
 			break;
-			default:
-				throw new UnsupportedOperationException();
+		default:
+			throw new UnsupportedOperationException();
 		}
 
 		super.visitFieldInsn(opcode, owner, name, desc);
@@ -84,7 +105,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			//Variable being stored is at this location on stack
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "(ILjava/lang/String;Ljava/lang/String;I)I", false);
@@ -95,7 +116,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			super.visitVarInsn(opcode, var);
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "(ILjava/lang/String;Ljava/lang/String;I)I", false);
@@ -105,7 +126,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			//Variable being stored is at this location on stack
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "(DLjava/lang/String;Ljava/lang/String;I)D", false);
@@ -117,7 +138,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			super.visitVarInsn(opcode, var);
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "(DLjava/lang/String;Ljava/lang/String;I)D", false);
@@ -127,7 +148,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			//Variable being stored is at this location on stack
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "(FLjava/lang/String;Ljava/lang/String;I)F", false);
@@ -138,7 +159,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			super.visitVarInsn(opcode, var);
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "(FLjava/lang/String;Ljava/lang/String;I)F", false);
@@ -148,7 +169,7 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			//Variable being stored is at this location on stack
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logDef", "(JLjava/lang/String;Ljava/lang/String;I)J", false);
@@ -159,12 +180,13 @@ public class DefUseLoggingMethodVisitor extends MethodVisitor{
 			super.visitVarInsn(opcode, var);
 			super.visitLdcInsn(className);
 			super.visitLdcInsn(methodName);
-			super.visitInsn(Opcodes.ICONST_0); //Taint tag for line number
+			super.visitInsn(Opcodes.ACONST_NULL); //Taint tag for line number
 			super.visitIntInsn(Opcodes.BIPUSH,currentLineNumber); //Line number
 
 			super.visitMethodInsn(Opcodes.INVOKESTATIC, Type.getInternalName(DefUseLogger.class), "logUse", "(JLjava/lang/String;Ljava/lang/String;I)J", false);
 			return;
 		}
+		//TODO implement ASTORE and ALOAD
 
 
 		super.visitVarInsn(opcode, var);

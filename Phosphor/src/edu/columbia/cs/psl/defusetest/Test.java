@@ -7,15 +7,14 @@ public class Test {
 		a = 20;
 		int a2 = a;
 		int a3 = a;
-		//		while( a >  1){
-		//			a2 = a;
-		//			a = a-5;
-		//		}
+		while( a >  2){
+			a = a/2;
+		}
 		a2 = a3;
 		double b = 1.1;
 		float f = 1.1f;
 		long l = 1;
-		//testmethod(a, b, f, l);
+		testmethod(a, b, f, l);
 		testStatic(a);
 
 		Test t= new Test();

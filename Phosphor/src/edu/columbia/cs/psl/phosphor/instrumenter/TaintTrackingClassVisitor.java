@@ -319,8 +319,10 @@ public class TaintTrackingClassVisitor extends ClassVisitor {
 				ImplicitTaintRemoverMV implicitCleanup = new ImplicitTaintRemoverMV(Opcodes.ASM5, className, boxFixer, analyzer);
 
 				tmv = new TaintPassingMV(implicitCleanup, access, className, name, newDesc, desc, analyzer,rootmV);
-				DefUseLoggingMethodVisitor defUseLogger = new DefUseLoggingMethodVisitor(tmv,className,name);
-				lvs = new LocalVariableManager(access, newDesc, defUseLogger, analyzer,mv);
+				MethodVisitor next = tmv;
+				if(Configuration.DEF_USE_LOGGING)
+					next = new DefUseLoggingMethodVisitor(tmv,className,name);
+				lvs = new LocalVariableManager(access, newDesc, next, analyzer,mv);
 
 				nextMV = new ConstantValueNullTaintGenerator(className, access, name, newDesc, signature, exceptions, lvs);
 			}
